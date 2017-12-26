@@ -6,6 +6,8 @@ import java.util.Set;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
+ * 队伍信息
+ *
  */
 
 public class Teaminfo implements Serializable {
