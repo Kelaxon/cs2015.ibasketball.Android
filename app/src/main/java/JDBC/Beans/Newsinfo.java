@@ -11,21 +11,28 @@ import java.util.Set;
 public class Newsinfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String newsId;
+    private int newsId;
     private String newsTitle;
     private String newsContent;
     private Timestamp newsTime;
     private String newsPic;
     private int newsCount;
-    private Managerinfo managerinfo;
-    private Set<Usermessagenew> usermessagenews;
-    private Set<Usercollectnew> usercollectnews;
+    private String magId;
 
-    public String getNewsId() {
+    public void setMagId(String magId) {
+        this.magId = magId;
+    }
+
+    public String getMagId() {
+        return magId;
+
+    }
+
+    public int getNewsId() {
         return newsId;
     }
 
-    public void setNewsId(String newsId) {
+    public void setNewsId(int newsId) {
         this.newsId = newsId;
     }
 
@@ -67,30 +74,6 @@ public class Newsinfo implements Serializable {
 
     public void setNewsCount(int newsCount) {
         this.newsCount = newsCount;
-    }
-
-    public Managerinfo getManagerinfo() {
-        return managerinfo;
-    }
-
-    public void setManagerinfo(Managerinfo managerinfo) {
-        this.managerinfo = managerinfo;
-    }
-
-    public Set<Usermessagenew> getUsermessagenews() {
-        return usermessagenews;
-    }
-
-    public void setUsermessagenews(Set<Usermessagenew> usermessagenews) {
-        this.usermessagenews = usermessagenews;
-    }
-
-    public Set<Usercollectnew> getUsercollectnews() {
-        return usercollectnews;
-    }
-
-    public void setUsercollectnews(Set<Usercollectnew> usercollectnews) {
-        this.usercollectnews = usercollectnews;
     }
 
     public static long getSerialversionuid() {

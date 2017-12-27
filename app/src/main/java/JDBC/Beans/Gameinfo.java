@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
+ *
+ * DAO接口
  */
 
 public class Gameinfo implements Serializable {

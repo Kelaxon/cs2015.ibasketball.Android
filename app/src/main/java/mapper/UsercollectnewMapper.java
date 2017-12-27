@@ -1,6 +1,8 @@
 package mapper;
 
-import JDBC.Beans.Usercollectnew;
+import java.util.List;
+
+import JDBC.Beans.Usercollectnews;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
@@ -8,13 +10,14 @@ import JDBC.Beans.Usercollectnew;
 
 public interface UsercollectnewMapper {
 
-    public boolean add(Usercollectnew usercollectnew);
+    public boolean add(Usercollectnews usercollectnews);
 
     public boolean delete(Integer id);
 
-    public boolean update(Usercollectnew usercollectnew);
+    public boolean update(Usercollectnews usercollectnews);
 
-    public boolean findByUsercollectnewId(Integer id);
-
+    public Usercollectnews findByUsercollectnewId(Integer id);
+    //全部查询
+    public List<Usercollectnews> findAll();
 
 }

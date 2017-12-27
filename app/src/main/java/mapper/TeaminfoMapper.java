@@ -1,5 +1,7 @@
 package mapper;
 
+import java.util.List;
+
 import JDBC.Beans.Teaminfo;
 
 /**
@@ -14,6 +16,8 @@ public interface TeaminfoMapper {
 
     public boolean update(Teaminfo teaminfo);
 
-    public boolean findByTeaminfoId(Integer id);
+    public Teaminfo findByTeaminfoId(Integer id);
+    //全部查询
+    public List<Teaminfo> findAll();
 
 }

@@ -12,7 +12,6 @@ public class Managerinfo implements Serializable {
     private String magId;
     private String magPassword;
     private String magName;
-    private Set<Newsinfo> newsinfos;
 
     public String getMagId() {
         return magId;
@@ -36,14 +35,6 @@ public class Managerinfo implements Serializable {
 
     public void setMagName(String magName) {
         this.magName = magName;
-    }
-
-    public Set<Newsinfo> getNewsinfos() {
-        return newsinfos;
-    }
-
-    public void setNewsinfos(Set<Newsinfo> newsinfos) {
-        this.newsinfos = newsinfos;
     }
 
     public static long getSerialversionuid() {

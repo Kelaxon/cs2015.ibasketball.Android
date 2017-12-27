@@ -1,5 +1,7 @@
 package mapper;
 
+import java.util.List;
+
 import JDBC.Beans.Managerinfo;
 
 /**
@@ -10,10 +12,11 @@ public interface ManagerinfoMapper {
 
     public boolean add(Managerinfo managerinfo);
 
-    public boolean delete(Integer id);
+    public boolean delete(String id);
 
     public boolean update(Managerinfo managerinfo);
 
-    public boolean findByManagerinfoId(Integer id);
-
+    public Managerinfo findByManagerinfoId(String id);
+    //全部查询
+    public List<Managerinfo> findAll();
 }

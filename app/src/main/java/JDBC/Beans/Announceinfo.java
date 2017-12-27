@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
+ *
+ * DAO接口
  */
 
 public class Announceinfo implements Serializable {
@@ -13,7 +15,7 @@ public class Announceinfo implements Serializable {
     private String announceTitle;
     private String announceContent;
     private Timestamp announceTime;
-    private Userinfo userinfo;
+    private int userId;
 
     public int getAnnounceId() {
         return announceId;
@@ -47,12 +49,12 @@ public class Announceinfo implements Serializable {
         this.announceTime = announceTime;
     }
 
-    public Userinfo getUserinfo() {
-        return userinfo;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserinfo(Userinfo userinfo) {
-        this.userinfo = userinfo;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public static long getSerialversionuid() {

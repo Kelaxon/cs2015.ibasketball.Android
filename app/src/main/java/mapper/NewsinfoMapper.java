@@ -1,5 +1,7 @@
 package mapper;
 
+import java.util.List;
+
 import JDBC.Beans.Newsinfo;
 
 /**
@@ -10,10 +12,11 @@ public interface NewsinfoMapper {
 
     public boolean add(Newsinfo newsinfo);
 
-    public boolean delete(String newsId);
+    public boolean delete(Integer newsId);
 
     public boolean update(Newsinfo newsinfo);
 
-    public boolean findByNewsinfoId(String newsId);
-
+    public Newsinfo findByNewsinfoId(String newsId);
+    //全部查询
+    public List<Newsinfo> findAll();
 }

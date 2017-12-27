@@ -20,7 +20,6 @@ public class Teaminfo implements Serializable {
     private String teamPlayers;
     private String teamLogo;
     private String teamHonors;
-    private Set<Scoreinfo> scoreinfos;
 
     public int getTeamId() {
         return teamId;
@@ -76,14 +75,6 @@ public class Teaminfo implements Serializable {
 
     public void setTeamHonors(String teamHonors) {
         this.teamHonors = teamHonors;
-    }
-
-    public Set<Scoreinfo> getScoreinfos() {
-        return scoreinfos;
-    }
-
-    public void setScoreinfos(Set<Scoreinfo> scoreinfos) {
-        this.scoreinfos = scoreinfos;
     }
 
     public static long getSerialversionuid() {

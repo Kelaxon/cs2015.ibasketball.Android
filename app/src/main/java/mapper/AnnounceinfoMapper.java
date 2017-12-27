@@ -1,5 +1,7 @@
 package mapper;
 
+import java.util.List;
+
 import JDBC.Beans.Announceinfo;
 
 /**
@@ -17,6 +19,7 @@ public interface AnnounceinfoMapper {
 
     public boolean update(Announceinfo announceinfo);
 
-    public boolean findByAnnounceinfoId(Integer id);
-
+    public Announceinfo findByAnnounceinfoId(Integer id);
+    //全部查询
+    public List<Announceinfo> findAll();
 }

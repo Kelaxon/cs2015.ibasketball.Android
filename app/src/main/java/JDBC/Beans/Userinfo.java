@@ -23,9 +23,6 @@ public class Userinfo implements Serializable {
     private String userAvatar;
     private String userTruname;
     private String userIntro;
-    private Set<Announceinfo> announceinfos;
-    private Set<Usermessagenew> usermessagenews;
-    private Set<Usercollectnew> usercollectnews;
 
     static public Userinfo getByName(String userName) {
         Userinfo userinfo = null;
@@ -156,30 +153,6 @@ public class Userinfo implements Serializable {
 
     public void setUserIntro(String userIntro) {
         this.userIntro = userIntro;
-    }
-
-    public Set<Announceinfo> getAnnounceinfos() {
-        return announceinfos;
-    }
-
-    public void setAnnounceinfos(Set<Announceinfo> announceinfos) {
-        this.announceinfos = announceinfos;
-    }
-
-    public Set<Usermessagenew> getUsermessagenews() {
-        return usermessagenews;
-    }
-
-    public void setUsermessagenews(Set<Usermessagenew> usermessagenews) {
-        this.usermessagenews = usermessagenews;
-    }
-
-    public Set<Usercollectnew> getUsercollectnews() {
-        return usercollectnews;
-    }
-
-    public void setUsercollectnews(Set<Usercollectnew> usercollectnews) {
-        this.usercollectnews = usercollectnews;
     }
 
 }

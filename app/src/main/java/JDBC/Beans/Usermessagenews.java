@@ -7,14 +7,13 @@ import java.sql.Timestamp;
  * Created by ChrisYoung on 2017/12/26.
  */
 
-public class Usermessagenew implements Serializable {
+public class Usermessagenews implements Serializable {
     private static final long serialVersionUID = 1L;
     private int umnId;
     private Timestamp messageTime;
     private String messageContent;
-    private Newsinfo newsinfo;
-    private Userinfo userinfo;
-
+    private int userId;
+    private int newsId;
 
     public int getUmnId() {
         return umnId;
@@ -40,20 +39,21 @@ public class Usermessagenew implements Serializable {
         this.messageContent = messageContent;
     }
 
-    public Newsinfo getNewsinfo() {
-        return newsinfo;
+
+    public int getUserId() {
+        return userId;
     }
 
-    public void setNewsinfo(Newsinfo newsinfo) {
-        this.newsinfo = newsinfo;
+    public int getNewsId() {
+        return newsId;
     }
 
-    public Userinfo getUserinfo() {
-        return userinfo;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public void setUserinfo(Userinfo userinfo) {
-        this.userinfo = userinfo;
+    public void setNewsId(int newsId) {
+        this.newsId = newsId;
     }
 
     public static long getSerialversionuid() {

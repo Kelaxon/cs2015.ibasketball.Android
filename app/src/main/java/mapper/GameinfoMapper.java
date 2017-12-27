@@ -1,5 +1,7 @@
 package mapper;
 
+import java.util.List;
+
 import JDBC.Beans.Gameinfo;
 
 /**
@@ -14,6 +16,8 @@ public interface GameinfoMapper {
 
     public boolean update(Gameinfo gameinfo);
 
-    public boolean findByGameinfoId(Integer id);
+    public Gameinfo findByGameinfoId(Integer id);
+    //全部查询
+    public List<Gameinfo> findAll();
 
 }

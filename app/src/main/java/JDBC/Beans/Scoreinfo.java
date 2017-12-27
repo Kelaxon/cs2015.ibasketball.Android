@@ -16,7 +16,7 @@ public class Scoreinfo implements Serializable {
     private float scorePpg;
     private float scorePlp;
     private int scoreTg;
-    private Teaminfo teaminfo;
+    private int teamId;
 
     public int getScoreId() {
         return scoreId;
@@ -74,12 +74,12 @@ public class Scoreinfo implements Serializable {
         this.scoreTg = scoreTg;
     }
 
-    public Teaminfo getTeaminfo() {
-        return teaminfo;
+    public int getTeamId() {
+        return teamId;
     }
 
-    public void setTeaminfo(Teaminfo teaminfo) {
-        this.teaminfo = teaminfo;
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
     public static long getSerialversionuid() {

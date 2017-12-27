@@ -1,5 +1,7 @@
 package mapper;
 
+import java.util.List;
+
 import JDBC.Beans.Scoreinfo;
 
 /**
@@ -14,6 +16,8 @@ public interface ScoreinfoMapper {
 
     public boolean update(Scoreinfo scoreinfo);
 
-    public boolean findByScoreinfoId(Integer id);
+    public Scoreinfo findByScoreinfoId(Integer id);
+    //全部查询
+    public List<Scoreinfo> findAll();
 
 }
