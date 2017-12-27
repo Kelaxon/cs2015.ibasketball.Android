@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">iBasketball</string>
+    <string name="app_name">爱篮球</string>
+    <string name="username">用户名</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="tab_1">？？？</string>
+    <string name="tab_2">赛事资讯</string>
+    <string name="tab_3">我的频道</string>
+    <string name="test_news_title">NBA Power Rankings: Warriors back on top, Raptors make a move</string>
+    <string name="test_news_shortDescription">While viewers may have been let down that Nike didn\'t outfit the 10 teams playing on Christmas Day in special holiday themed jerseys, players around the league still got in the spirit and broke out several green and red sneakers for the occasion.</string>
 </resources>

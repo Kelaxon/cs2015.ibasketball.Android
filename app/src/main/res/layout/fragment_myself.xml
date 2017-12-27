@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/appbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:statusBarScrim="@android:color/transparent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/headphoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/avatarView"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/avatarView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="132dp"
+                    android:text="Chris Young"
+                    android:textSize="24sp" />
+
+
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways" />
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEEEEE"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                cardCornerRadius="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:clickable="false"
+                app:cardElevation="4dp">
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:columnCount="3"
+                    android:orientation="horizontal"
+                    android:rowCount="2">
+
+                    <LinearLayout
+                        android:id="@+id/button_moments_wode"
+                        android:layout_width="60dp"
+                        android:layout_height="66dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:scaleType="centerCrop"
+                            android:tint="@color/colorAccent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="我的发帖"
+                            android:textColor="@color/colorAccent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/button_find_wode"
+                        android:layout_width="60dp"
+                        android:layout_height="66dp"
+                        android:layout_marginLeft="64dp"
+                        android:layout_marginRight="64dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:scaleType="centerCrop"
+                            android:tint="@color/colorAccent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="我的收藏"
+                            android:textColor="@color/colorAccent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/button_other_wode"
+                        android:layout_width="60dp"
+                        android:layout_height="66dp"
+
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:scaleType="centerCrop"
+                            android:tint="@color/colorAccent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="退出"
+                            android:textColor="@color/colorAccent" />
+
+                    </LinearLayout>
+
+                </GridLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/button_logout"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="80dp"
+                android:text="退出登录"
+                fancy:fb_borderColor="@color/colorAccent"
+                fancy:fb_defaultColor="@color/colorAccent"
+                fancy:fb_focusColor="#FFFFFF"
+                fancy:fb_radius="30dp"
+                fancy:fb_textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
