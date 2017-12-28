@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import JDBC.Beans.Usercollectnews;
@@ -113,7 +114,7 @@ public class UsercollectnewMapperImpl implements UsercollectnewMapper {
             conn = DBConnection.getConnection();
 
             String sql = "update  usercollectnews " +
-                    "set ucn_id=? user_id=? news_id=? collection_time=? " +
+                    "set ucn_id=? , user_id=? , news_id=? , collection_time=? " +
                     "where ucn_id=? ";
             //准备语句
             ps=conn.prepareStatement(sql);
@@ -204,7 +205,7 @@ public class UsercollectnewMapperImpl implements UsercollectnewMapper {
 
         ResultSet rs = null;
 
-        List<Usercollectnews> list=null;
+        List<Usercollectnews> list=new ArrayList<Usercollectnews>();
         try {
             conn = DBConnection.getConnection();
 

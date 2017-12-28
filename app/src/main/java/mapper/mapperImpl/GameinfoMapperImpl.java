@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import JDBC.Beans.Gameinfo;
@@ -15,7 +16,7 @@ import mapper.GameinfoMapper;
 /**
  * Created by ChrisYoung on 2017/12/26.
  *
- *      modify by 莫林立
+ *      modify by 莫林立   complete
  * DAO实现类
  */
 
@@ -122,7 +123,7 @@ public class GameinfoMapperImpl implements GameinfoMapper {
             conn = DBConnection.getConnection();
 
             String sql = "update  gameinfo " +
-                    "set game_id=? game_title=? game_location=? game_team1=? game_team2=? game_result=?" +
+                    "set game_id=? , game_time=? , game_location=? , game_team1=? , game_team2=? , game_result=?" +
                     "where game_id=? ";
             //准备语句
             ps=conn.prepareStatement(sql);
@@ -138,6 +139,8 @@ public class GameinfoMapperImpl implements GameinfoMapper {
             ps.setString(5,gameinfo.getGameTeam2());
 
             ps.setString(6,gameinfo.getGameResult());
+
+            ps.setInt(7,gameinfo.getGameId());
             //执行
             int r=ps.executeUpdate();
 
@@ -188,7 +191,7 @@ public class GameinfoMapperImpl implements GameinfoMapper {
 
                 gameinfo.setGameTime(rs.getTimestamp("game_time"));
 
-                gameinfo.setGameLocation(rs.getString("game_loacation"));
+                gameinfo.setGameLocation(rs.getString("game_location"));
 
                 gameinfo.setGameTeam1(rs.getString("game_team1"));
 
@@ -223,7 +226,7 @@ public class GameinfoMapperImpl implements GameinfoMapper {
 
         ResultSet rs = null;
 
-        List<Gameinfo> list=null;
+        List<Gameinfo> list=new ArrayList<Gameinfo>();
 
         try {
             conn = DBConnection.getConnection();
@@ -241,7 +244,7 @@ public class GameinfoMapperImpl implements GameinfoMapper {
 
                 gameinfo.setGameTime(rs.getTimestamp("game_time"));
 
-                gameinfo.setGameLocation(rs.getString("game_loacation"));
+                gameinfo.setGameLocation(rs.getString("game_location"));
 
                 gameinfo.setGameTeam1(rs.getString("game_team1"));
 

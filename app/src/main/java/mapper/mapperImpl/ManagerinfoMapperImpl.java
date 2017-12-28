@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import JDBC.Beans.Managerinfo;
@@ -112,7 +113,7 @@ public class ManagerinfoMapperImpl implements ManagerinfoMapper {
             conn = DBConnection.getConnection();
 
             String sql = "update  managerinfo " +
-                    "set mag_id=? mag_password=? mag_name=? " +
+                    "set mag_id=? , mag_password=? , mag_name=? " +
                     "where mag_id=? ";
             //准备语句
             ps=conn.prepareStatement(sql);
@@ -202,7 +203,7 @@ public class ManagerinfoMapperImpl implements ManagerinfoMapper {
 
         ResultSet rs = null;
 
-        List<Managerinfo> list=null;
+        List<Managerinfo> list=new ArrayList<Managerinfo>();
         try {
             conn = DBConnection.getConnection();
 

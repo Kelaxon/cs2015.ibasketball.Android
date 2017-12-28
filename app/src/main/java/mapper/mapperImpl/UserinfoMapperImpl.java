@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import JDBC.Beans.Userinfo;
 import JDBC.DBConnection;
@@ -117,55 +120,14 @@ public class UserinfoMapperImpl implements UserinfoMapper {
     @Override
     public boolean update(Userinfo userinfo) {
 
-        Connection conn = null;
-
-        PreparedStatement ps = null;
-        try {
-            conn = DBConnection.getConnection();
-
-            String sql = "update  userinfo " +
-                    "set user_id=? user_name=? user_password=? user_addr=? user_email=? user_tel=? user_avatar=? user_truname=? user_intro=? " +
-                    "where user_id=? ";
-            //准备语句
-            ps=conn.prepareStatement(sql);
-            //设置参数
-            ps.setInt(1,userinfo.getUserId());
-
-            ps.setString(2,userinfo.getUserName());
-
-            ps.setString(3,userinfo.getUserPassword());
-
-            ps.setString(4,userinfo.getUserAddr());
-
-            ps.setString(5,userinfo.getUserEmail());
-
-            ps.setString(6,userinfo.getUserTel());
-
-            ps.setString(7,userinfo.getUserAvatar());
-
-            ps.setString(8,userinfo.getUserTruname());
-
-            ps.setString(9,userinfo.getUserIntro());
-            //指定ID
-            ps.setInt(10,userinfo.getUserId());
-            //执行
-            int r=ps.executeUpdate();
-
+        //执行删除
+        delete(userinfo.getUserId());
+        //进行添加
+        if(add(userinfo))
+        {
             return true;
+        };
 
-        }catch (Exception e){
-
-            e.printStackTrace();
-        }finally {
-            try {
-                ps.close();
-
-                conn.close();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
         return false;
     }
 
@@ -236,7 +198,7 @@ public class UserinfoMapperImpl implements UserinfoMapper {
 
         ResultSet rs = null;
 
-        List<Userinfo> list=null;
+        List<Userinfo> list=new ArrayList<Userinfo>();
         try {
             conn = DBConnection.getConnection();
 
@@ -294,11 +256,11 @@ public class UserinfoMapperImpl implements UserinfoMapper {
 
         ResultSet rs = null;
 
-        List<Userinfo> list=null;
+        List<Userinfo> list=new ArrayList<Userinfo>();
         try{
             conn = DBConnection.getConnection();
 
-            String sql = "select * from userinfo where user_id like ?";
+            String sql = "select * from userinfo where user_name like ?";
 
             //准备语句
             ps=conn.prepareStatement(sql);
@@ -337,7 +299,10 @@ public class UserinfoMapperImpl implements UserinfoMapper {
             e.printStackTrace();
         }finally {
             try {
-                DBConnection.dbClose(conn,ps,rs);
+//                DBConnection.dbClose(conn,ps,rs);
+                rs.close();
+                ps.close();
+                conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -346,12 +311,14 @@ public class UserinfoMapperImpl implements UserinfoMapper {
     }
 
     @Override
-    public boolean userLogin(String name, String password) {
+    public Map<String,Integer > userLogin(String name, String password) {
         Connection conn = null;
 
         PreparedStatement ps = null;
 
         ResultSet rs = null;
+
+        Map<String,Integer> map=new HashMap<String,Integer>();
         try {
             conn = DBConnection.getConnection();
 
@@ -363,12 +330,23 @@ public class UserinfoMapperImpl implements UserinfoMapper {
             //执行
             rs=ps.executeQuery();
 
-            while (rs.next()){
+            if (rs.next()){
                 String getPassword=rs.getString("user_password");
 
-                if(getPassword==password){
-                    return true;
+                if(getPassword.equals(password)){
+
+                    map.put("status",0);        //登录成功
+
+                    return  map;
+                }else {
+                    map.put("status",1);        //密码错误
+
+                    return map;
                 }
+            }else {
+                map.put("status",2);            //该用户不存在
+
+                return map;
             }
         }catch (Exception e){
 
@@ -380,6 +358,6 @@ public class UserinfoMapperImpl implements UserinfoMapper {
                 e.printStackTrace();
             }
         }
-        return false;
+        return null;
     }
 }

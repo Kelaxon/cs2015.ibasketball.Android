@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import JDBC.Beans.Userinfo;
@@ -116,7 +117,7 @@ public class UsermessagenewMapperIMpl implements UsermessagenewsMapper {
             conn = DBConnection.getConnection();
 
             String sql = "update  usermessagenews " +
-                    "set umn_id=? user_id=? news_id=? message_time=? message_content=? " +
+                    "set umn_id=? , user_id=? , news_id=? , message_time=? , message_content=? " +
                     "where umn_id=? ";
             //准备语句
             ps=conn.prepareStatement(sql);
@@ -210,7 +211,7 @@ public class UsermessagenewMapperIMpl implements UsermessagenewsMapper {
 
         ResultSet rs = null;
 
-        List<Usermessagenews> list=null;
+        List<Usermessagenews> list=new ArrayList<Usermessagenews>();
         try {
             conn = DBConnection.getConnection();
 

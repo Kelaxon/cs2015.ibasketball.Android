@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import JDBC.Beans.Announceinfo;
@@ -16,7 +17,7 @@ import mapper.AnnounceinfoMapper;
 /**
  * Created by ChrisYoung on 2017/12/26.
  *
- *      modify by 莫林立
+ *      modify by 莫林立   complete
  * DAO实现类
  */
 
@@ -45,8 +46,8 @@ public class AnnounceinfoMapperImpl implements AnnounceinfoMapper {
 
             if (!rs.next()) {       //没有相应记录
 
-                String sql_2 = "insert into announceinfo(announce_id,user_id,announce_title,announce_conten,announce_time) " +
-                        "values (?,?,?,?,?,?)";
+                String sql_2 = "insert into announceinfo(announce_id,user_id,announce_title,announce_content,announce_time) " +
+                        "values (?,?,?,?,?)";
                 //准备语句
                 ps = conn.prepareStatement(sql_2);
                 //设置参数
@@ -60,7 +61,7 @@ public class AnnounceinfoMapperImpl implements AnnounceinfoMapper {
 
                 ps.setTimestamp(5, announceinfo.getAnnounceTime());
                 //执行
-                int r = ps.executeUpdate(sql_2);
+                int r = ps.executeUpdate();
 
                     return true;
 
@@ -128,7 +129,7 @@ public class AnnounceinfoMapperImpl implements AnnounceinfoMapper {
             conn = DBConnection.getConnection();
 
             String sql = "update  announceinfo " +
-                    "set user_id=? announce_title=? announce_content=? announce_time=? " +
+                    "set user_id=? , announce_title=? , announce_content=? , announce_time=? " +
                     "where announce_id=? ";
 
             //准备语句
@@ -152,7 +153,6 @@ public class AnnounceinfoMapperImpl implements AnnounceinfoMapper {
 
             e.printStackTrace();
         }finally {
-
             try {
                 ps.close();
 
@@ -225,7 +225,7 @@ public class AnnounceinfoMapperImpl implements AnnounceinfoMapper {
 
         ResultSet rs = null;
 
-        List<Announceinfo> list=null;
+        List<Announceinfo> list=new ArrayList<Announceinfo>();
 
         try {
             conn = DBConnection.getConnection();

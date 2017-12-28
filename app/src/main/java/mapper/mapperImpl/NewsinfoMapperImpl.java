@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import JDBC.Beans.Newsinfo;
@@ -17,7 +18,7 @@ import mapper.NewsinfoMapper;
  * 1写一个getAll
  * 2NewsInfo再写个通过string近似搜索的 用like % 返回List<NewsInfo>
  * <p>
- * modify by 莫林立
+ * modify by 莫林立 complete
  * DAO实现类
  */
 
@@ -122,7 +123,7 @@ public class NewsinfoMapperImpl implements NewsinfoMapper {
             conn = DBConnection.getConnection();
 
             String sql = "update  newsinfo " +
-                    "set news_id=? mag_id=? news_title=? news_content=? news_time=? news_pic=? news_count=?" +
+                    "set news_id=? , mag_id=? , news_title=? , news_content=? , news_time=? , news_pic=? , news_count=? " +
                     "where news_id=? ";
             //准备语句
             ps = conn.prepareStatement(sql);
@@ -140,6 +141,8 @@ public class NewsinfoMapperImpl implements NewsinfoMapper {
             ps.setString(6, newsinfo.getNewsPic());
 
             ps.setInt(7, newsinfo.getNewsCount());
+
+            ps.setInt(8,newsinfo.getNewsId());
             //执行
             int r = ps.executeUpdate();
 
@@ -161,7 +164,7 @@ public class NewsinfoMapperImpl implements NewsinfoMapper {
     }
 
     @Override
-    public Newsinfo findByNewsinfoId(String newsId) {
+    public Newsinfo findByNewsinfoId(Integer newsId) {
         Connection conn = null;
 
         PreparedStatement ps = null;
@@ -177,7 +180,7 @@ public class NewsinfoMapperImpl implements NewsinfoMapper {
             //准备语句
             ps = conn.prepareStatement(sql);
             //设置参数
-            ps.setString(1, newsId);
+            ps.setInt(1, newsId);
             //执行
             rs = ps.executeQuery();
 
@@ -222,12 +225,12 @@ public class NewsinfoMapperImpl implements NewsinfoMapper {
 
         ResultSet rs = null;
 
-        List<Newsinfo> list = null;
+        List<Newsinfo> list = new ArrayList<Newsinfo>();
 
         try {
             conn = DBConnection.getConnection();
 
-            String sql = "select * from scoreinfo";
+            String sql = "select * from newsinfo";
 
             st = conn.createStatement();
             //无参执行

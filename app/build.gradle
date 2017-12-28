@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 24
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.edu.bjfu.cs2015.ibasketball"
@@ -42,7 +42,7 @@ dependencies {
     compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
     //圆角按钮
     compile 'com.github.medyo:fancybuttons:1.8.4'
-
+    //单元测试
     testCompile 'junit:junit:4.12'
     implementation files('libs/mysql-connector-java-5.1.44-bin.jar')
 }

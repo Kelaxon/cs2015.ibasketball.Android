@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import JDBC.Beans.Scoreinfo;
@@ -122,7 +123,7 @@ public class ScoreinfoMapperImpl implements ScoreinfoMapper {
             conn = DBConnection.getConnection();
 
             String sql = "update  scoreinfo " +
-                    "set score_id=? score_ranking=? team_id=? score_wins=? score_loses=? score_ppg=? score_plp=? score_tg=?" +
+                    "set score_id=? , score_ranking=? , team_id=? , score_wins=? , score_loses=? , score_ppg=? , score_plp=? , score_tg=?" +
                     "where score_id=? ";
             //准备语句
             ps=conn.prepareStatement(sql);
@@ -228,7 +229,7 @@ public class ScoreinfoMapperImpl implements ScoreinfoMapper {
 
         ResultSet rs = null;
 
-        List<Scoreinfo> list=null;
+        List<Scoreinfo> list=new ArrayList<Scoreinfo>();
         try {
             conn = DBConnection.getConnection();
 

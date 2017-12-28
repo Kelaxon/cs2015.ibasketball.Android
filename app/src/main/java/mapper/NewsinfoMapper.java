@@ -16,7 +16,7 @@ public interface NewsinfoMapper {
 
     public boolean update(Newsinfo newsinfo);
 
-    public Newsinfo findByNewsinfoId(String newsId);
+    public Newsinfo findByNewsinfoId(Integer newsId);
     //全部查询
     public List<Newsinfo> findAll();
 }

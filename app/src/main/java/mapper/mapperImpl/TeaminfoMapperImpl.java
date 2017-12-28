@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import JDBC.Beans.Teaminfo;
@@ -14,6 +15,9 @@ import mapper.TeaminfoMapper;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
+ *
+ *  *      modify by 莫林立
+ * DAO实现类
  */
 
 public class TeaminfoMapperImpl implements TeaminfoMapper {
@@ -118,7 +122,7 @@ public class TeaminfoMapperImpl implements TeaminfoMapper {
             conn = DBConnection.getConnection();
 
             String sql = "update  teaminfo " +
-                    "set team_id=? team_name=? team_time=? team_coachers=? team_players=? team_logo=? team_honors=? " +
+                    "set team_id=? , team_name=? , team_time=? , team_coachers=? , team_players=? , team_logo=? , team_honors=? " +
                     "where team_id=? ";
             //准备语句
             ps=conn.prepareStatement(sql);
@@ -223,7 +227,7 @@ public class TeaminfoMapperImpl implements TeaminfoMapper {
 
         ResultSet rs = null;
 
-        List<Teaminfo> list=null;
+        List<Teaminfo> list=new ArrayList<Teaminfo>();
         try {
             conn = DBConnection.getConnection();
 
