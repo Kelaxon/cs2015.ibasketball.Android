@@ -1,6 +1,5 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="32dp"
@@ -16,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/news_header"
+            android:id="@+id/ui_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -24,15 +23,15 @@
             android:layout_alignParentTop="true">
 
             <ImageView
-                android:id="@+id/pic"
+                android:id="@+id/iv_news_pic"
                 android:layout_alignParentTop="true"
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
-                android:src="@drawable/testPic"
+                android:src="@drawable/test_pic"
                 android:scaleType="centerCrop"/>
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/tv_news_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -43,10 +42,10 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/word"
+            android:id="@+id/tv_news_shortContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/news_header"
+            android:layout_below="@id/ui_header"
             android:layout_margin="15dp"
             android:lineSpacingExtra="5dp"
             android:text="@string/test_news_shortDescription" />

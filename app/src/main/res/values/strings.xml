@@ -6,6 +6,21 @@
     <string name="tab_1">？？？</string>
     <string name="tab_2">赛事资讯</string>
     <string name="tab_3">我的频道</string>
+    <string name="user_welcome">Welcome,</string>
+    <string name="add_message">添加帖子</string>
+
+    <string name="test_user_name">ChrisYoung</string>
+    <string name="test_user_addr">北京林业大学</string>
+    <string name="test_user_email">17801123456</string>
+    <string name="test_user_intro">你的男孩</string>
+    <string name="test_news_time">2015-06-15</string>
     <string name="test_news_title">NBA Power Rankings: Warriors back on top, Raptors make a move</string>
     <string name="test_news_shortDescription">While viewers may have been let down that Nike didn\'t outfit the 10 teams playing on Christmas Day in special holiday themed jerseys, players around the league still got in the spirit and broke out several green and red sneakers for the occasion.</string>
+    <string name="test_everyday_welcome">如果我们任何事情都没有勇气去尝试，人生还有什么意义。</string>
+    <string name="test_message_time">2016-06-15</string>
+    <string name="test_message_content">While viewers may have been let down that Nike didn\'t outfit the 10 teams playing on Christmas Day in special holiday themed</string>
+    <string name="error_invalid_password">密码大于 4 位</string>
+    <string name="error_incorrect_password">密码错误</string>
+    <string name="error_field_required">这个是必填项</string>
+    <string name="search_hint">搜索你喜欢的队伍</string>
 </resources>

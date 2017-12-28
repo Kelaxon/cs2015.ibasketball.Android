@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/Logo"
+            android:src="@drawable/logo"
             android:tint="@color/white" />
 
         <TextView
@@ -55,7 +55,7 @@
                 android:theme="@style/LightAutoCompleteTextView">
 
                 <AutoCompleteTextView
-                    android:id="@+id/username"
+                    android:id="@+id/tv_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
@@ -72,7 +72,7 @@
                 android:theme="@style/LightAutoCompleteTextView">
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -87,18 +87,19 @@
         </LinearLayout>
 
 
-        <GridLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="32dp"
-            android:columnCount="2"
-            android:orientation="horizontal"
-            android:rowCount="1">
+            android:orientation="horizontal">
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/username_login_button"
-                android:layout_width="140dp"
+                android:id="@+id/b_login"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="42dp"
                 android:layout_marginRight="16dp"
                 android:text="登录"
@@ -106,12 +107,13 @@
                 fancy:fb_borderWidth="2dp"
                 fancy:fb_defaultColor="@color/transparent"
                 fancy:fb_focusColor="#FFFFFF"
-                fancy:fb_radius="30dp"
+                fancy:fb_radius="4dp"
                 fancy:fb_textColor="#FFFFFF" />
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/username_register_button"
-                android:layout_width="140dp"
+                android:id="@+id/b_register"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="42dp"
                 android:layout_marginLeft="16dp"
                 android:text="注册 +"
@@ -119,10 +121,19 @@
                 fancy:fb_borderWidth="2dp"
                 fancy:fb_defaultColor="@color/colorAccent"
                 fancy:fb_focusColor="#FFFFFF"
-                fancy:fb_radius="30dp"
+                fancy:fb_radius="4dp"
                 fancy:fb_textColor="#FFFFFF" />
 
-        </GridLayout>
 
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/b_browser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="32dp"
+            android:textColor="@color/white"
+            android:text="随便逛逛" />
     </LinearLayout>
 </RelativeLayout>

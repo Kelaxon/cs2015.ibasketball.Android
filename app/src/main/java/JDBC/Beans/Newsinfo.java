@@ -2,7 +2,6 @@ package JDBC.Beans;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Set;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
@@ -18,6 +17,7 @@ public class Newsinfo implements Serializable {
     private String newsPic;
     private int newsCount;
     private String magId;
+    public static String timeFormat = "dd-MM-yyyy HH:mm:ss";
 
     public void setMagId(String magId) {
         this.magId = magId;

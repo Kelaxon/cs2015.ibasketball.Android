@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/iBasketball.iml" filepath="$PROJECT_DIR$/iBasketball.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cs2015.ibasketball.Android.iml" filepath="$PROJECT_DIR$/cs2015.ibasketball.Android.iml" />
     </modules>
   </component>
 </project>
