@@ -19,8 +19,12 @@ import android.widget.Toast;
 
 import com.edu.bjfu.cs2015.ibasketball.UI.FullScreenVideoView;
 
+import java.util.Map;
+
 import JDBC.Beans.Userinfo;
 import mehdi.sakout.fancybuttons.FancyButton;
+import mapper.*;
+import mapper.mapperImpl.*;
 
 /**
  * Created by ChrisYoung on 2017/12/27.
@@ -46,13 +50,13 @@ public class LoginActivity extends AppCompatActivity {
         initBackgroundUI();
 
         // TODO: 实现Userinfo.getCurrentUser()
-
+         /*----------------------modify by 莫林立---------------------------*/
         // 如果用户已经登陆：
-//        if (Userinfo.getCurrentUser() != null) {
-//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//            LoginActivity.this.finish();
-//        }
-
+        if (Userinfo.getCurrentUser() != null) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            LoginActivity.this.finish();
+        }
+         /*----------------------modify by 莫林立end--------------------------*/
 
         // 登陆框的listener
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.tv_username);
@@ -93,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO currentUser 改成游客
+                //游客是什么身份？
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 LoginActivity.this.finish();
             }
@@ -128,22 +133,34 @@ public class LoginActivity extends AppCompatActivity {
         } else {
 
             // TODO 1. 判断用户名是否存在，否则返回错误信息 2. 判断用户密码是否正确，否则返回错误信息 3. 都正确，intent跳转
+            /*----------------------modify by 莫林立---------------------------*/
+            UserinfoMapperImpl userinfoMapperImpl=new UserinfoMapperImpl();
+            //获取用户登录状态，map.get(key)==0（登录成功）；1（密码错误）；2（不存在该用户）
+            Map<String,Integer> map=userinfoMapperImpl.userLogin(username,password);
 
             String errorMessage = "";
             if (!Userinfo.isExists(username, password)) {
+
                 errorMessage = "用户名不存在";
+
                 Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+
                 return;
             }
 
-            // 2.
-            //if(Userinfo.)
-            //{
-            // }
+            // 2.密码错误
+            if(map.get("status").equals(1)) {
+                errorMessage="密码错误";
+             }
 
-            // 3.
-            LoginActivity.this.finish();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            // 3.登录成功
+            if(map.get("status").equals(2)){
+
+                LoginActivity.this.finish();
+
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
+            /*----------------------modify by 莫林立 end--------------------------*/
 
         }
     }

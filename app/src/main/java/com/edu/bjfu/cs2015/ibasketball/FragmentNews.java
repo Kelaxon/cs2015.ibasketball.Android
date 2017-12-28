@@ -16,7 +16,7 @@ import com.edu.bjfu.cs2015.ibasketball.component.ListNewsinfoAdapter;
 import java.util.List;
 
 import JDBC.Beans.Newsinfo;
-
+import mapper.mapperImpl.NewsinfoMapperImpl;
 /**
  * Created by ChrisYoung on 2017/12/27.
  */
@@ -49,8 +49,11 @@ public class FragmentNews extends Fragment {
 
 
         // TODO JDBC操作获取所有新闻
-        // mResultAdapter = new ListNewsinfoAdapter(getActivity(), Newsinfo.getAll());  //在Fragment中，this要替换成getActivitiy
+        /*------------------------modify by 莫林立-----------------------*/
+        NewsinfoMapperImpl newsinfoMapperImpl=new NewsinfoMapperImpl();
 
+         mResultAdapter = new ListNewsinfoAdapter(newsinfoMapperImpl.findAll(),getActivity() );  //在Fragment中，this要替换成getActivitiy
+        /*------------------------modify by 莫林立 end-----------------------*/
         //设置Adapter
         mRecyclerView.setAdapter(mResultAdapter);
 
