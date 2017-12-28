@@ -19,7 +19,7 @@
             android:layout_marginTop="17dp"
             android:layout_marginBottom="8dp"
             android:text="赛事资讯"
-            android:textColor="#212121"
+            android:textColor="@color/black"
             android:textSize="28sp"
             android:textStyle="bold" />
 

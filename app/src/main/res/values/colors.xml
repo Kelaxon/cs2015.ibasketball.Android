@@ -8,4 +8,8 @@
     <color name="color_tab_1">#ff6868</color>
     <color name="color_tab_2">#ff4081</color>
     <color name="color_tab_3">#303F9F</color>
+    <color name="blue_900">#0D47A1</color>
+
+    <color name="black">#212121</color>
+    <color name="pressed_color">#E7E7E7</color>
 </resources>

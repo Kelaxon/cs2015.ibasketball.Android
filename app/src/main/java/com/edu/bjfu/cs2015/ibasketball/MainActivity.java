@@ -6,15 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-
-import JDBC.Beans.Userinfo;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
@@ -33,80 +27,86 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initBottomNavigationUI();
 
-        // 获得控件控制权
-        Button button = (Button) findViewById(R.id.b_login);
-        TextView textView = (TextView) findViewById(R.id.tv_loginID);
+        // 默认Fragment
+        fragmentManager = getSupportFragmentManager();
+        showFragment(FRAGMENT_NEWS);
 
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // 定义变量传参
-                final Userinfo[] userinfo = {null};
-
-                // 创建子线程进行数据库操作
-                Thread t1 = new Thread() {
-                    public void run() {
-                        userinfo[0] = Userinfo.getByName("chris");
-                    }
-                };
-                t1.start();
-                try {
-                    t1.join();
-                } catch (InterruptedException e) {
-                    Log.e("MA2", e.getMessage());
-                }
-
-                // 获得输出参数
-                // UI操作要在主线程中
-                textView.setText(userinfo[0].getUserTruname());
-
-            }
-
-        });
+//        // 获得控件控制权
+//        Button button = (Button) findViewById(R.id.b_login);
+//        TextView textView = (TextView) findViewById(R.id.tv_loginID);
+//
+//
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                // 定义变量传参
+//                final Userinfo[] userinfo = {null};
+//
+//                // 创建子线程进行数据库操作
+//                Thread t1 = new Thread() {
+//                    public void run() {
+//                        userinfo[0] = Userinfo.getByName("chris");
+//                    }
+//                };
+//                t1.start();
+//                try {
+//                    t1.join();
+//                } catch (InterruptedException e) {
+//                    Log.e("MA2", e.getMessage());
+//                }
+//
+//                // 获得输出参数
+//                // UI操作要在主线程中
+//                textView.setText(userinfo[0].getUserTruname());
+//
+//            }
+//
+//        });
     }
 
-    public void initBottomNavigation() {
+    public void initBottomNavigationUI() {
         AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
 
-// Create items
+        // Create items
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_maps_tab1, R.color.color_tab_1);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_maps_tab2, R.color.color_tab_2);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_maps_tab3, R.color.color_tab_3);
 
-// Add items
+        // Add items
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
         bottomNavigation.addItem(item3);
 
-// Set background color
+        // Set background color
         bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
 
-// Disable the translation inside the CoordinatorLayout
+        // Disable the translation inside the CoordinatorLayout
         bottomNavigation.setBehaviorTranslationEnabled(true);
 
-// Change colors
+        // Change colors
         bottomNavigation.setAccentColor(Color.parseColor("#F63D2B"));
         bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
 
-// Force to tint the drawable (useful for font with icon for example)
+        // Force to tint the drawable (useful for font with icon for example)
         bottomNavigation.setForceTint(true);
 
-// Display color under navigation bar (API 21+)
-// Don't forget these lines in your style-v21
-// <item name="android:windowTranslucentNavigation">true</item>
-// <item name="android:fitsSystemWindows">true</item>
+        // Display color under navigation bar (API 21+)
+        // Don't forget these lines in your style-v21
+        // <item name="android:windowTranslucentNavigation">true</item>
+        // <item name="android:fitsSystemWindows">true</item>
         bottomNavigation.setTranslucentNavigationEnabled(true);
 
-// Manage titles
+        // Manage titles
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE);
-//
-// Set current item programmatically
+
+        // Set current item programmatically
         bottomNavigation.setCurrentItem(1);
-//
-// Customize notification (title, background, typeface)
+
+        // Customize notification (title, background, typeface)
         bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#F63D2B"));
 
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
@@ -114,15 +114,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTabSelected(int position, boolean wasSelected) {
 
                 if (position == 0) {
-                    Log.e("Click0", "onRestart");
                     showFragment(FRAGMENT_GAMES);
                 }
                 if (position == 1) {
-                    Log.e("Click1", "onRestart");
                     showFragment(FRAGMENT_NEWS);
                 }
                 if (position == 2) {
-                    Log.e("Click2", "onRestart");
                     showFragment(FRAGMENT_MYSELF);
                 }
                 return true;
@@ -153,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             case FRAGMENT_NEWS:
                 if (news == null) {
-                    news = new FragmentSousuo();
+                    news = new FragmentNews();
                     ft.add(R.id.fragment_layout_main, news);
                 } else {
                     ft.show(news);
@@ -161,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
             case FRAGMENT_MYSELF:
                 if (myself == null) {
-                    myself = new FragmentWode();
+                    myself = new FragmentMyself();
                     ft.add(R.id.fragment_layout_main, myself);
                 } else {
                     ft.show(myself);

@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.edu.bjfu.cs2015.ibasketball.MainActivity">
 
+    <com.edu.bjfu.cs2015.ibasketball.UI.SearchView
+        android:id="@+id/sv_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="17dp"
+        android:visibility="visible">
+    </com.edu.bjfu.cs2015.ibasketball.UI.SearchView>
+
     <TextView
         android:id="@+id/tv_loginID"
         android:layout_width="wrap_content"

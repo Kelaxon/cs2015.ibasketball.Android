@@ -5,7 +5,7 @@ android {
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.edu.bjfu.cs2015.ibasketball"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -17,12 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dexOptions {
-        incremental true
-    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
     }
 }
 
@@ -42,7 +42,8 @@ dependencies {
     compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
     //圆角按钮
     compile 'com.github.medyo:fancybuttons:1.8.4'
-
+    //搜索
+    compile 'com.github.arimorty:floatingsearchview:2.1.1'
     testCompile 'junit:junit:4.12'
     implementation files('libs/mysql-connector-java-5.1.44-bin.jar')
 }
