@@ -63,7 +63,7 @@ public class AnnounceinfoMapperImpl implements AnnounceinfoMapper {
                 //执行
                 int r = ps.executeUpdate();
 
-                    return true;
+                return true;
 
             }
         } catch (Exception e) {

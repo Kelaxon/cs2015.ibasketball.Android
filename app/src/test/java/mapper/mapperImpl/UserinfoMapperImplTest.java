@@ -139,7 +139,7 @@ public class UserinfoMapperImplTest {
     @Test
     public void userLogin() {
 
-        Integer i=userinfoMapperImpl.userLogin("lxb2","123456")
+        Integer i=userinfoMapperImpl.userLogin("杨洋","123456")
                 .get("status");
 
         switch (i){
@@ -153,5 +153,8 @@ public class UserinfoMapperImplTest {
                 System.out.println("该用户不存在");
                 break;
         }
+
+        System.out.println("当前用户");
+        System.out.println(Userinfo.getCurrentUser());
     }
 }

@@ -23,6 +23,8 @@ public class Userinfo implements Serializable {
     private String userAvatar;
     private String userTruname;
     private String userIntro;
+    //当前登录用户
+    private static Userinfo currentUser;
 
     static public Userinfo getByName(String userName) {
         Userinfo userinfo = null;
@@ -82,6 +84,15 @@ public class Userinfo implements Serializable {
         return false;
     }
 
+    //返回类内用户
+    public static Userinfo getCurrentUser(){
+
+        return currentUser;
+    }
+
+    public static void setCurrentUser(Userinfo userinfo){
+        currentUser=userinfo;
+    }
 
     public int getUserId() {
         return userId;
@@ -155,4 +166,18 @@ public class Userinfo implements Serializable {
         this.userIntro = userIntro;
     }
 
+    @Override
+    public String toString() {
+        return "Userinfo{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userAddr='" + userAddr + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userTel='" + userTel + '\'' +
+                ", userAvatar='" + userAvatar + '\'' +
+                ", userTruname='" + userTruname + '\'' +
+                ", userIntro='" + userIntro + '\'' +
+                '}';
+    }
 }

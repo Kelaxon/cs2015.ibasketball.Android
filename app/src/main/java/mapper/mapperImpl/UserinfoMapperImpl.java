@@ -18,7 +18,7 @@ import mapper.UserinfoMapper;
  * Created by ChrisYoung on 2017/12/26.
  * userinfo写一个判断用户password是否正确的
  *
- *    modify by 莫林立
+ *    modify by 莫林立     complete
  * DAO实现类
  */
 
@@ -240,7 +240,7 @@ public class UserinfoMapperImpl implements UserinfoMapper {
             try {
                 rs.close();
                 st.close();
-               conn.close();
+                conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -336,6 +336,10 @@ public class UserinfoMapperImpl implements UserinfoMapper {
                 if(getPassword.equals(password)){
 
                     map.put("status",0);        //登录成功
+
+                    List<Userinfo> list=findByName(name);
+                    //设置当前用户登录状态
+                    Userinfo.setCurrentUser(list.get(0));
 
                     return  map;
                 }else {
