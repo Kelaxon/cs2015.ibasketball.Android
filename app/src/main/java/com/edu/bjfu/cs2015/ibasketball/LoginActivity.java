@@ -77,7 +77,11 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+//                attemptLogin();
+
+                Intent intent=new Intent(LoginActivity.this,TestActivity.class);
+
+                startActivity(intent);
             }
         });
 
@@ -92,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
+        mBrowerButton = (TextView) findViewById(R.id.b_browser);
         mBrowerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

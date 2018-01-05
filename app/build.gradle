@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'd'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
     defaultConfig {
@@ -17,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -44,6 +48,12 @@ dependencies {
     compile 'com.github.medyo:fancybuttons:1.8.4'
     //搜索
     compile 'com.github.arimorty:floatingsearchview:2.1.1'
+
+
+    //添加gson依赖
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    compile 'com.google.code.gson:gson:2.8.2'
+
     testCompile 'junit:junit:4.12'
     implementation files('libs/mysql-connector-java-5.1.44-bin.jar')
 }
