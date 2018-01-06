@@ -25,7 +25,7 @@
             android:layout_marginTop="17dp"
             android:layout_marginBottom="8dp"
             android:textColor="@color/black"
-            android:textSize="28sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:id="@+id/testView"/>
 
@@ -62,6 +62,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/button3"
             android:text="是不是没有了？！"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button4"
+            android:text="查看获取到的json内容"/>
 
     </LinearLayout>
 

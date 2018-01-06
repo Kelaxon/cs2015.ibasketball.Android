@@ -5,20 +5,19 @@ package JSONPO;
  */
 
 public class UserinfoMessage {
-    private Userinfo userinfo;
+    private Userinfo currentUser;
     private String message;
+
+    public Userinfo getCurrentUser() {
+        return currentUser;
+    }
 
     public String getMessage() {
         return message;
     }
 
-    public Userinfo getUserinfo() {
-
-        return userinfo;
-    }
-
-    public void setUserinfo(Userinfo userinfo) {
-        this.userinfo = userinfo;
+    public void setCurrentUser(Userinfo currentUser) {
+        this.currentUser = currentUser;
     }
 
     public void setMessage(String message) {
@@ -28,8 +27,9 @@ public class UserinfoMessage {
     @Override
     public String toString() {
         return "UserinfoMessage{" +
-                "userinfo=" + userinfo +
+                "currentUser=" + currentUser +
                 ", message='" + message + '\'' +
                 '}';
     }
+
 }
