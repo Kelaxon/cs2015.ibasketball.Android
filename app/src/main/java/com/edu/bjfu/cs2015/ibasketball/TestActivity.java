@@ -1,9 +1,7 @@
 package com.edu.bjfu.cs2015.ibasketball;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,39 +13,23 @@ import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.edu.bjfu.cs2015.ibasketball.UI.FullScreenVideoView;
-import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
 import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
 import com.edu.bjfu.cs2015.ibasketball.tool.LoadImagesTask;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-import JSONPO.Userinfo;
 import JSONPO.UserinfoMessage;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-import static com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance.*;
-
-import static com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection.*;
 import static com.edu.bjfu.cs2015.ibasketball.tool.JsonToString.JsonToString;
 
 /*
@@ -140,15 +122,15 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String url = "http://172.23.100.219:8088/0-BBBS/UserActionApp.action?username=molinli&password=123456";//这里和GET方式不同的是去掉了“？”后面的参数；
 
-                volleyPost();
+                //volleyPost();
 
-//                getVolley(url);
+                getVolley();
             }
         });
     }
 
     public void volleyPost() {
-        String url = "http://172.23.100.219:8088/0-BBBS/UserActionApp.action";//这里和GET方式不同的是去掉了“？”后面的参数；
+        String url = " http://192.168.43.113:2008/0-BBBS/loginApp";//这里和GET方式不同的是去掉了“？”后面的参数；
         /**
          * 第一个参数指定了请求方式，第二个参数指定了url，第三个参数指定了正确访问的返回结果，第四个参数是访问失败后的业务逻辑；
          *
@@ -161,24 +143,49 @@ public class TestActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                if(volleyError==null)
+                    Log.e("tag3", "空");
+                else{
+                    volleyError.printStackTrace();
+                    Log.e("tag3",volleyError.getMessage() );
+                }
                 textView.setText("未能请求到数据");
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {//在这里封装了需要发送的参数；
+                Log.e("tag?","Z");
                 HashMap<String, String> map = new HashMap<>();
-                map.put("username", "molinli");//以键值对的形式存放；
-                map.put("password", "123456");
+                map.put("UA", "1");
+                map.put("userName", "molinli");//以键值对的形式存放；
+                map.put("userPassword", "123456");
                 return map;
             }
         };
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
         Volley.newRequestQueue(getApplicationContext()).add(request);//加入请求队列；
     }//volleyPost();
 
-    public void getVolley(String url) {
+    public void getVolley() {
         /**
          * 开始进行网络请求，设置相应的请求参数；
          */
+        String url = "http://192.168.43.113:2008/0-BBBS/loginApp?UA=1&userName=molinli&userPassword=123456";
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String result) {//请求成功时回调onResponse();
@@ -187,6 +194,7 @@ public class TestActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//请求成功时回调onErrorResponse();
+                Log.e("tag2", volleyError.getMessage());
                 textView.append("不能成功从服务器获取消息");
             }
         });

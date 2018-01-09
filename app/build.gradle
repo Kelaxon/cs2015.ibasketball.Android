@@ -54,7 +54,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
 
 //    //  volley很适合那种需要不断访问大量小数据的应用，比方说资讯，新闻啊什么的。
-//    compile 'com.mcxiaoke.volley:library:1.0.19'
+   compile 'com.mcxiaoke.volley:library:1.0.19'
 
     testCompile 'junit:junit:4.12'
     implementation files('libs/mysql-connector-java-5.1.44-bin.jar')

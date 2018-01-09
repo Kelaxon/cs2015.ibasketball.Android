@@ -22,9 +22,8 @@ import com.edu.bjfu.cs2015.ibasketball.UI.FullScreenVideoView;
 import java.util.Map;
 
 import JDBC.Beans.Userinfo;
+import mapper.mapperImpl.UserinfoMapperImpl;
 import mehdi.sakout.fancybuttons.FancyButton;
-import mapper.*;
-import mapper.mapperImpl.*;
 
 /**
  * Created by ChrisYoung on 2017/12/27.
@@ -135,29 +134,9 @@ public class LoginActivity extends AppCompatActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-<<<<<<< Updated upstream
-=======
 
             // TODO post username, password
             // TODO response 封装成 userinfo
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // TODO 1. 判断用户名是否存在，否则返回错误信息 2. 判断用户密码是否正确，否则返回错误信息 3. 都正确，intent跳转
-
-
-            /*----------------------modify by 莫林立---------------------------*/
-                    UserinfoMapperImpl userinfoMapperImpl=new UserinfoMapperImpl();
-                    //获取用户登录状态，map.get(key)==0（登录成功）；1（密码错误）；2（不存在该用户）
-
-                    Map<String, Integer>map = new Map();
-                   1 = new Thread(){
-                        public void run() {
-                            map[0] = userinfoMapperImpl.userLogin(username,password);
-                        }
-                    };
->>>>>>> Stashed changes
 
             //post username password
 

@@ -3,17 +3,30 @@ package com.edu.bjfu.cs2015.ibasketball;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+<<<<<<< HEAD
+import com.edu.bjfu.cs2015.ibasketball.adapter.ListNewsinfoAdapter;
+=======
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.edu.bjfu.cs2015.ibasketball.component.ListNewsinfoAdapter;
 import com.edu.bjfu.cs2015.ibasketball.tool.MySingleton;
 
 import org.json.JSONObject;
+>>>>>>> f772a269d847cc8efd380790634ff8558f4e8311
+
+import java.util.List;
+import JSONPO.Newsinfo;
+import mapper.mapperImpl.NewsinfoMapperImpl;
 /**
  * Created by ChrisYoung on 2017/12/27.
  */
@@ -48,11 +61,20 @@ public class FragmentNews extends Fragment {
                     }
                 });
 
+<<<<<<< HEAD
+        // TODO Post Response操作获取所有新闻
+        /*------------------------modify by 莫林立-----------------------*/
+        NewsinfoMapperImpl newsinfoMapperImpl=new NewsinfoMapperImpl();
+=======
         MySingleton.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest);
+>>>>>>> f772a269d847cc8efd380790634ff8558f4e8311
 
         return fragmentGoodscategoryView;
     }
 
 
 }
+
+
+
 
