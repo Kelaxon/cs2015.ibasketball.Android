@@ -15,7 +15,8 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="THIS is a textView. and  我修改了一次" />
+            android:text="THIS is a textView. and  我修改了一次"
+            android:id="@+id/InternetTest"/>
 
 
         <TextView
@@ -64,10 +65,10 @@
             android:text="是不是没有了？！"/>
 
         <Button
+            android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button4"
-            android:text="查看获取到的json内容"/>
+            android:text="测试网络连接" />
 
     </LinearLayout>
 

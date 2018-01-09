@@ -159,6 +159,8 @@ public class LoginActivity extends AppCompatActivity {
                     };
 >>>>>>> Stashed changes
 
+            //post username password
+
             // TODO 1. 判断用户名是否存在，否则返回错误信息 2. 判断用户密码是否正确，否则返回错误信息 3. 都正确，intent跳转
             /*----------------------modify by 莫林立---------------------------*/
             UserinfoMapperImpl userinfoMapperImpl=new UserinfoMapperImpl();
