@@ -135,6 +135,29 @@ public class LoginActivity extends AppCompatActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
+<<<<<<< Updated upstream
+=======
+
+            // TODO post username, password
+            // TODO response 封装成 userinfo
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // TODO 1. 判断用户名是否存在，否则返回错误信息 2. 判断用户密码是否正确，否则返回错误信息 3. 都正确，intent跳转
+
+
+            /*----------------------modify by 莫林立---------------------------*/
+                    UserinfoMapperImpl userinfoMapperImpl=new UserinfoMapperImpl();
+                    //获取用户登录状态，map.get(key)==0（登录成功）；1（密码错误）；2（不存在该用户）
+
+                    Map<String, Integer>map = new Map();
+                   1 = new Thread(){
+                        public void run() {
+                            map[0] = userinfoMapperImpl.userLogin(username,password);
+                        }
+                    };
+>>>>>>> Stashed changes
 
             // TODO 1. 判断用户名是否存在，否则返回错误信息 2. 判断用户密码是否正确，否则返回错误信息 3. 都正确，intent跳转
             /*----------------------modify by 莫林立---------------------------*/
@@ -184,6 +207,8 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     public void initUI() {
         // 沉浸
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -198,6 +223,13 @@ public class LoginActivity extends AppCompatActivity {
         String path = "android.resource://" + getPackageName() + "/" + R.raw.loginvideo;
         mVideoView.setVideoURI(Uri.parse(path));
         mVideoView.start();
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+                mp.setLooping(true);
+            }
+        });
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {

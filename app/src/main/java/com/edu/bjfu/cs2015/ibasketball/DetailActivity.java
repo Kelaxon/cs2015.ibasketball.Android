@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.edu.bjfu.cs2015.ibasketball.component.ListMessageinfoAdapter;
+import com.edu.bjfu.cs2015.ibasketball.adapter.ListMessageinfoAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

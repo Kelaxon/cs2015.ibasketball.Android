@@ -11,11 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.edu.bjfu.cs2015.ibasketball.component.ListNewsinfoAdapter;
+import com.edu.bjfu.cs2015.ibasketball.adapter.ListNewsinfoAdapter;
 
 import java.util.List;
-
-import JDBC.Beans.Newsinfo;
+import JSONPO.Newsinfo;
 import mapper.mapperImpl.NewsinfoMapperImpl;
 /**
  * Created by ChrisYoung on 2017/12/27.
@@ -48,7 +47,7 @@ public class FragmentNews extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-        // TODO JDBC操作获取所有新闻
+        // TODO Post Response操作获取所有新闻
         /*------------------------modify by 莫林立-----------------------*/
         NewsinfoMapperImpl newsinfoMapperImpl=new NewsinfoMapperImpl();
 

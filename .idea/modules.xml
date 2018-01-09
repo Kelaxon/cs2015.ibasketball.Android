@@ -3,7 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+<<<<<<< Updated upstream
       <module fileurl="file://$PROJECT_DIR$/cs2015.ibasketball.Android.iml" filepath="$PROJECT_DIR$/cs2015.ibasketball.Android.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/iBasketball.iml" filepath="$PROJECT_DIR$/iBasketball.iml" />
+>>>>>>> Stashed changes
     </modules>
   </component>
 </project>
