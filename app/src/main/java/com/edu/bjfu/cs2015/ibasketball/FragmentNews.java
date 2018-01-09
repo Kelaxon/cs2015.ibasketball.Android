@@ -3,56 +3,62 @@ package com.edu.bjfu.cs2015.ibasketball;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.edu.bjfu.cs2015.ibasketball.tool.MySingleton;
+import com.edu.bjfu.cs2015.ibasketball.adapter.ListNewsinfoAdapter;
 
-import org.json.JSONObject;
+import java.util.List;
+
+import JSONPO.Newsinfo;
 /**
  * Created by ChrisYoung on 2017/12/27.
  */
 
 public class FragmentNews extends Fragment {
-    private TextView textView = null;
+    private RecyclerView mRecyclerView;     //新闻列表
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ListNewsinfoAdapter mResultAdapter;      //新闻列表Adapter
+    private List<Newsinfo> mNewsInfoList;  //所有新闻数据
+
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View fragmentGoodscategoryView = inflater.inflate(R.layout.fragment_goodscategory, null);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        textView = (TextView) fragmentGoodscategoryView.findViewById(R.id.textview);
+        View view = inflater.inflate(R.layout.fragment_news, container, false);
+        //初始化数据
+        mNewsInfoList = null;
 
-        String requsetUrl = "http://apis.baidu.com/apistore/weatherservice/citylist";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(requsetUrl, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        textView.setText("The json data is :" + jsonObject.toString());
+        //RecyclerView的初始化
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL); //单列瀑布流
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-//                Toast.makeText(getActivity(), "获取JSON数据失败", Toast.LENGTH_SHORT).show();
-                        textView.setText("Json request faileed, The volleyError is :" + volleyError);
+        //设置LayoutMananger
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        //设置item的动画，可以不设置
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                    }
-                });
 
-        MySingleton.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest);
+        // TODO Post Response操作获取所有新闻
+        /*------------------------modify by 莫林立-----------------------*/
+//        NewsinfoMapperImpl newsinfoMapperImpl=new NewsinfoMapperImpl();
+//
+//        mResultAdapter = new ListNewsinfoAdapter(newsinfoMapperImpl.findAll(),getActivity() );  //在Fragment中，this要替换成getActivitiy
+        /*------------------------modify by 莫林立 end-----------------------*/
+        //设置Adapter
+        mRecyclerView.setAdapter(mResultAdapter);
 
-        return fragmentGoodscategoryView;
+        return view;
     }
 
-
 }
+
 
