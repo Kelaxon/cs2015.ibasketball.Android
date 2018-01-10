@@ -3,7 +3,6 @@ package com.edu.bjfu.cs2015.ibasketball;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -11,13 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.edu.bjfu.cs2015.ibasketball.UI.FullScreenVideoView;
 import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
 import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
@@ -73,7 +65,7 @@ public class TestActivity extends AppCompatActivity {
 
                 Type type=new TypeToken<UserinfoMessage>(){}.getType();
 
-                UserinfoMessage userinfo=jsonToInstance.JsonToInstance(JsonToString(TestActivity.this.getResources()),type);
+                UserinfoMessage userinfo=jsonToInstance.ToInstance(JsonToString(TestActivity.this.getResources()),type);
 
                 if(userinfo!=null){
                     textView.setText("JSON解析成功！");
@@ -131,7 +123,7 @@ public class TestActivity extends AppCompatActivity {
                 HttpConnection.setUrl(url);
                 //4.执行连接
                 HttpConnection.volleyPost();
-                //5.打印结果--响应有延迟，延迟使用getResponse()
+                //5.打印结果--响应有延迟，延迟使用getResponse() 获取到的是json string
                 textView.setText(HttpConnection.getResponse());
             }
         });

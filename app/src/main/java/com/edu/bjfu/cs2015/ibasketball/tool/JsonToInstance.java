@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 public class JsonToInstance<T> {
 
     //泛型方法 Json文件 把Type当作参数传入
-    public T JsonToInstance(String JsonString, Type type){
+    public  T ToInstance(String JsonString, Type type){
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 

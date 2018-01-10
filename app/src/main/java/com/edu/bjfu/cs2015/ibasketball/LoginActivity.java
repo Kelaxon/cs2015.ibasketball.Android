@@ -26,10 +26,13 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+import INTERFACE.Action;
 import JSONPO.CurrentUser;
 import JSONPO.Userinfo;
+import JSONPO.UserinfoMessage;
 import mehdi.sakout.fancybuttons.FancyButton;
 
+import Action.ActionLogin;
 /**
  * Created by ChrisYoung on 2017/12/27.
  */
@@ -96,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO 数据库中建游客账户
 
+
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 LoginActivity.this.finish();
             }
@@ -133,20 +137,36 @@ public class LoginActivity extends AppCompatActivity {
                 public void run() {
                     HttpConnection.setMap(map);
 
-                    // TODO 用依赖注入实现不同方法的excecute(命令模式)
+                    // TODO 用依赖注入实现不同方法的excecute(命令模式) modify by molinli
                     Action userLoginAction = new ActionLogin();
-                    HttpConnection.execute(userLoginAction);
-                    String reponse = HttpConnection.getResponse();
-                    infoMessage = HttpConnection.get ??;
 
-                    // TODO 获得用户对象
+                    //获取到当前contenxt
+                    userLoginAction.setContext(getApplicationContext());
+                    //你要在这里设置url
+                    userLoginAction.setUrl("");
+                    //请你指定http请求参数
+                    Map mapInfo=new HashMap();
+                    mapInfo.put("key","value");
+                    //申请http
+                    HttpConnection.execute(userLoginAction,mapInfo);
+                    //获取响应 json文件
+                    String reponse = HttpConnection.getResponse();
+                    //请问你要get什么？
+                   //infoMessage = HttpConnection.get ??;
+
+                    // TODO 获得用户对象 modify by molinli
                     if (reponse != null) {
                         Type type = new TypeToken<Userinfo>() {
                         }.getType();
-                        JsonToInstance<Userinfo> jsonToInstance = new JsonToInstance(reponse, type);
-                        userinfo[0] = jsonToInstance.JsonToInstance ????
-                    }
 
+                        JsonToInstance<Userinfo> jsonToInstance = new JsonToInstance();
+                        //get类型
+                        Type typeForParam=new TypeToken<UserinfoMessage>(){}.getType();
+                        //
+                        Userinfo userinfoGet=jsonToInstance.ToInstance(reponse,typeForParam);
+
+                       //userinfo[0] = jsonToInstance.JsonToInstance ????
+                    }
 
                 }
             });

@@ -38,8 +38,6 @@ public class FragmentMyself extends Fragment implements View.OnClickListener {
 
         mUser = CurrentUser.getcurrentUser();
 
-
-
         mButtonMessage = (LinearLayout) view.findViewById(R.id.b_user_message);
         mButtonCollection = (LinearLayout) view.findViewById(R.id.b_user_collection);
         mButtonUpdateInfo = (ImageView) view.findViewById(R.id.iv_user_avatar);

@@ -15,11 +15,21 @@ import android.widget.Toast;
 
 import com.edu.bjfu.cs2015.ibasketball.adapter.ListNewsinfoAdapter;
 import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
+import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import JSONPO.Newsinfo;
+import JSONPO.Userinfo;
+import JSONPO.UserinfoMessage;
 import JSONPO.Usermessagenew;
+
+import INTERFACE.Action;
+import Action.ListAllAction;
 
 /**
  * Created by ChrisYoung on 2017/12/27.
@@ -31,7 +41,8 @@ public class FragmentNews extends Fragment {
     private ListNewsinfoAdapter mNewsInfoAdapter;      //新闻列表Adapter
     private List<Newsinfo> mNewsInfoList;  //所有新闻数据
     private String infoMessage;
-
+    // 传入参数
+    List<Newsinfo> newsInfoList = null;
 
     @Nullable
     @Override
@@ -69,23 +80,37 @@ public class FragmentNews extends Fragment {
         return view;
     }
 
+
+
         public List<Newsinfo> listAll () throws InterruptedException {
 
-            // 传入参数
-            List<Newsinfo> newsInfoList = null;
+//            // 传入参数
+//             List<Newsinfo> newsInfoList = null;
             infoMessage = "";
 
 
             Thread t1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
-
-                    // TODO Post Response操作获取所有新闻
-                    Action listAllAction = new listAllAction("news");
-                    HttpConnection.execute(listAllAction);
+                    // TODO Post Response操作获取所有新闻 modify
+                    Action listAllAction = new ListAllAction("news");
+                    //获取到当前contenxt
+                    listAllAction.setContext(getContext());
+                    //请你指定http请求参数
+                    Map mapInfo=new HashMap();
+                    mapInfo.put("key","value");
+                    //申请http
+                    HttpConnection.execute(listAllAction,mapInfo);
+                    //获取响应 json文件
                     String reponse = HttpConnection.getResponse();
-                    infoMessage = HttpConnection.get ??;
-                    newsInfoList = ???
+
+//                    infoMessage = HttpConnection.get ??;
+
+                    JsonToInstance<List<Newsinfo>> jsonToInstance = new JsonToInstance();
+                    //get类型
+                    Type typeForParam=new TypeToken<List<Newsinfo>>(){}.getType();
+                    //这个变量的作用域要修改一下
+                    newsInfoList =jsonToInstance.ToInstance(reponse,typeForParam);
                 }
             });
 
@@ -93,7 +118,7 @@ public class FragmentNews extends Fragment {
             t1.join();
 
             // 传出参数
-            if (newsInfoList == null) {
+            if (newsInfoList.get(0) == null) {
                 Toast.makeText(getActivity(), infoMessage, Toast.LENGTH_SHORT).show();
                 return null;
             } else {

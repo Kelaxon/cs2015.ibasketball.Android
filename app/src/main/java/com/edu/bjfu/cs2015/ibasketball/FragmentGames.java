@@ -15,10 +15,18 @@ import android.widget.Toast;
 import com.edu.bjfu.cs2015.ibasketball.UI.SearchView;
 import com.edu.bjfu.cs2015.ibasketball.adapter.ListGamesAdapter;
 import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
+import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import INTERFACE.Action;
 import JSONPO.Gameinfo;
+import Action.ListAllAction;
+import JSONPO.Newsinfo;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
@@ -57,8 +65,24 @@ public class FragmentGames extends Fragment implements SearchView.SearchViewList
         //设置item的动画，可以不设置
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // TODO Post Response操作获取所有赛事
-        mGameInfoList = listAll();
+        // TODO Post Response操作获取所有赛事   modify by molinli
+        Action listAllAction = new ListAllAction("game");
+        //获取到当前contenxt
+        listAllAction.setContext(getContext());
+        //请你指定http请求参数
+        Map mapInfo=new HashMap();
+        mapInfo.put("key","value");
+        //申请http
+        HttpConnection.execute(listAllAction,mapInfo);
+        //获取响应 json文件
+        String reponse = HttpConnection.getResponse();
+        //创建json解析实例
+        JsonToInstance<List<Gameinfo>> jsonToInstance = new JsonToInstance();
+        //get类型
+        Type typeForParam=new TypeToken<List<Gameinfo>>(){}.getType();
+        //get到list
+        mGameInfoList = jsonToInstance.ToInstance(reponse,typeForParam);
+
         mGameInfoAdapter = new ListGamesAdapter(mGameInfoList, getActivity());
 
 
@@ -68,21 +92,41 @@ public class FragmentGames extends Fragment implements SearchView.SearchViewList
         return view;
     }
 
+    // 传入参数
+    List<Gameinfo> gameInfoList = null;
+
     public List<Gameinfo> listAll() throws InterruptedException {
 
-        // 传入参数
-        List<Gameinfo> gameInfoList = null;
+
         infoMessage = "";
 
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                // TODO Post Response操作获取所有新闻
-                Action listAllAction = new listAllAction("game");
-                HttpConnection.execute(listAllAction);
+                // TODO Post Response操作获取所有新闻 modify by molinli
+                Action listAllAction = new ListAllAction("game");
+                //获取到当前contenxt
+                listAllAction.setContext(getContext());
+                //请你指定http请求参数
+                Map mapInfo=new HashMap();
+                mapInfo.put("key","value");
+                //申请http
+                HttpConnection.execute(listAllAction,mapInfo);
+                //获取响应 json文件
                 String reponse = HttpConnection.getResponse();
-                infoMessage = HttpConnection.get ??;
-                gameInfoList = ???
+                //创建json解析实例
+                JsonToInstance<List<Gameinfo>> jsonToInstance = new JsonToInstance();
+                //get类型
+                Type typeForParam=new TypeToken<List<Gameinfo>>(){}.getType();
+
+
+//                HttpConnection.execute(listAllAction);
+
+//                String reponse = HttpConnection.getResponse();
+
+//                infoMessage ="";
+
+                gameInfoList = jsonToInstance.ToInstance(reponse,typeForParam);
             }
         });
         t1.start();

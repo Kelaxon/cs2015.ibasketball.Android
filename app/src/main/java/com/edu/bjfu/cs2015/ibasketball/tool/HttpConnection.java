@@ -14,6 +14,8 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+import INTERFACE.Action;
+
 /**
  * Created by 莫林立 on 2018/1/6.
  */
@@ -106,6 +108,15 @@ public class HttpConnection {
             }
         });
         Volley.newRequestQueue(context).add(request);
+    }
+
+    //获取到url 和 context 提供参数
+    public static void execute(Action action,Map mapInfo){
+        url=action.getUrl();
+        context=action.getContext();
+        map=mapInfo;
+
+        volleyPost();
     }
 
 }

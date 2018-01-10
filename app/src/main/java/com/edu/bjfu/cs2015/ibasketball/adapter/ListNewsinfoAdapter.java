@@ -82,6 +82,10 @@ public class ListNewsinfoAdapter extends RecyclerView.Adapter<ListNewsinfoAdapte
 //        holder.mNewsShortContent.setText((CharSequence) mNewsinfoList.get(position).get("pname"));
 //        Picasso.with( mContext).load(mNewsinfoList.get(position).getAVFile("TitleImage") == null ? "NO PICTURE" : mNewsinfoList.get(position).getAVFile("TitleImage").getUrl()).transform(new RoundedTransformation(9,0)).into(holder.mNewsPic);
 //        holder.itemView.setTag(mNewsinfoList.get(position));
+
+        //?
+
+
     }
 
     @Override
