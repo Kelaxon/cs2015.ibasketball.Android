@@ -55,14 +55,4 @@ public class Announceinfo implements Serializable {
 		return serialVersionUID;
 	}
 
-	@Override
-	public String toString() {
-		return "Announceinfo{" +
-				"announceId=" + announceId +
-				", announceTitle='" + announceTitle + '\'' +
-				", announceContent='" + announceContent + '\'' +
-				", announceTime=" + announceTime +
-				", userinfo=" + userinfo +
-				'}';
-	}
 }

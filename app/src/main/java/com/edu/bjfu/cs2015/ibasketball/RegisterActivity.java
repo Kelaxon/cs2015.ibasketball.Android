@@ -81,13 +81,13 @@ public class RegisterActivity extends AppCompatActivity {
             user.setUserPassword(password);
 
 
-            // TODO isExists的参数应该只是username
+            // TODO isExists 暂不实现
 //            if(Userinfo.isExists(username)){
 //                Toast.makeText(RegisterActivity.this, "oh, 该用户名已经被使用", Toast.LENGTH_SHORT).show();
 //                return;
 //            }
 
-            // TODO implement 1.Boolean Userinfo.addUser() method, 注册成功，把用户对象赋值给当前用户 Userinfo.getCurrentUser()
+            // TODO register 暂不实现
             //if(Userinfo.addUser(user)){
             //  注册成功，把用户对象赋值给当前用户 Userinfo.getCurrentUser()
             //  startActivity(new Intent(RegisterActivity.this, ActivityMain.class));

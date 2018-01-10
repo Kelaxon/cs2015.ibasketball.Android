@@ -1,5 +1,7 @@
 package JSONPO;
 
+import JSONPO.*;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -17,6 +19,28 @@ public class Userinfo implements Serializable {
 	private Set<Announceinfo> announceinfos;
 	private Set<Usermessagenew> usermessagenews;
 	private Set<Usercollectnew> usercollectnews;
+	private Set<Usercollectgame> usercollectgames;
+	private Set<Usermessagegame> usermessagegames;
+
+	public Set<Usercollectgame> getUsercollectgames() {
+		return usercollectgames;
+	}
+
+	public void setUsercollectgames(Set<Usercollectgame> usercollectgames) {
+		this.usercollectgames = usercollectgames;
+	}
+
+	public Set<Usermessagegame> getUsermessagegames() {
+		return usermessagegames;
+	}
+
+	public void setUsermessagegames(Set<Usermessagegame> usermessagegames) {
+		this.usermessagegames = usermessagegames;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public int getUserId() {
 		return userId;
@@ -114,21 +138,4 @@ public class Userinfo implements Serializable {
 		this.usercollectnews = usercollectnews;
 	}
 
-	@Override
-	public String toString() {
-		return "Userinfo{" +
-				"userId=" + userId +
-				", userName='" + userName + '\'' +
-				", userPassword='" + userPassword + '\'' +
-				", userAddr='" + userAddr + '\'' +
-				", userEmail='" + userEmail + '\'' +
-				", userTel='" + userTel + '\'' +
-				", userAvatar='" + userAvatar + '\'' +
-				", userTruname='" + userTruname + '\'' +
-				", userIntro='" + userIntro + '\'' +
-				", announceinfos=" + announceinfos +
-				", usermessagenews=" + usermessagenews +
-				", usercollectnews=" + usercollectnews +
-				'}';
-	}
 }

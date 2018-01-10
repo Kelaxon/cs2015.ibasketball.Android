@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,9 +15,19 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.edu.bjfu.cs2015.ibasketball.UI.FullScreenVideoView;
+import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
+import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+
+import JSONPO.CurrentUser;
+import JSONPO.Userinfo;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
@@ -34,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView mBrowerButton;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,14 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initBackgroundUI();
 
-        // TODO: 实现Userinfo.getCurrentUser()
-         /*----------------------modify by 莫林立---------------------------*/
-        // 如果用户已经登陆：
-//        if (Userinfo.getCurrentUser() != null) {
-//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//            LoginActivity.this.finish();
-//        }
-         /*----------------------modify by 莫林立end--------------------------*/
 
         // 登陆框的listener
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.tv_username);
@@ -71,10 +72,8 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-//                attemptLogin();
-
-                Intent intent=new Intent(LoginActivity.this,TestActivity.class);
-
+                attemptLogin();
+                Intent intent = new Intent(LoginActivity.this, TestActivity.class);
                 startActivity(intent);
             }
         });
@@ -85,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 跳往注册界面
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 LoginActivity.this.finish();
             }
@@ -94,8 +94,8 @@ public class LoginActivity extends AppCompatActivity {
         mBrowerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO currentUser 改成游客
-                //游客是什么身份？
+                // TODO 数据库中建游客账户
+
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 LoginActivity.this.finish();
             }
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void attemptLogin() {
+    private void attemptLogin() throws InterruptedException {
         mUsernameView.setError(null);
         mPasswordView.setError(null);
 
@@ -114,65 +114,59 @@ public class LoginActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        if (TextUtils.isEmpty(username)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
-            cancel = true;
-        }
 
         if (cancel) {
             focusView.requestFocus();
         } else {
 
-            // TODO post username, password
-            // TODO response 封装成 userinfo
 
-            //post username password
+            Map map = new HashMap();
+            map.put("userName", username);
+            map.put("userPassword", password);
 
-            // TODO 1. 判断用户名是否存在，否则返回错误信息 2. 判断用户密码是否正确，否则返回错误信息 3. 都正确，intent跳转
-            /*----------------------modify by 莫林立---------------------------*/
-//            UserinfoMapperImpl userinfoMapperImpl=new UserinfoMapperImpl();
-            //获取用户登录状态，map.get(key)==0（登录成功）；1（密码错误）；2（不存在该用户）
-//            Map<String,Integer> map=userinfoMapperImpl.userLogin(username,password);
+            // 传入参数
+            final Userinfo[] userinfo = {null};
+            String infoMessage = "";
 
-//            String errorMessage = "";
-//            if (!Userinfo.isExists(username, password)) {
-//
-//                errorMessage = "用户名不存在";
-//
-//                Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-//
-//                return;
-//            }
-//
-//            // 2.密码错误
-//            if(map.get("status").equals(1)) {
-//                errorMessage="密码错误";
-//             }
-//
-//            // 3.登录成功
-//            if(map.get("status").equals(2)){
-//
-//                LoginActivity.this.finish();
+            Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    HttpConnection.setMap(map);
 
+                    // TODO 用依赖注入实现不同方法的excecute(命令模式)
+                    Action userLoginAction = new ActionLogin();
+                    HttpConnection.execute(userLoginAction);
+                    String reponse = HttpConnection.getResponse();
+                    infoMessage = HttpConnection.get ??;
+
+                    // TODO 获得用户对象
+                    if (reponse != null) {
+                        Type type = new TypeToken<Userinfo>() {
+                        }.getType();
+                        JsonToInstance<Userinfo> jsonToInstance = new JsonToInstance(reponse, type);
+                        userinfo[0] = jsonToInstance.JsonToInstance ????
+                    }
+
+
+                }
+            });
+            t1.start();
+            t1.join();
+
+
+            // 有错情况
+            if (userinfo[0] == null) {
+                Toast.makeText(LoginActivity.this, infoMessage, Toast.LENGTH_SHORT).show();
+
+            } else {
+                // 无错情况
+                CurrentUser.setCurrentUser(userinfo[0]);
+                LoginActivity.this.finish();
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
-            /*----------------------modify by 莫林立 end--------------------------*/
-
         }
-//    }
-
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
     }
+//    }
 
 
     @Override
@@ -182,7 +176,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
     public void initUI() {

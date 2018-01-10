@@ -5,27 +5,27 @@ import JSONPO.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Usercollectnew implements Serializable, Comparable<Usercollectnew>{
+public class Usercollectgame implements Serializable, Comparable<Usercollectgame> {
 
 	private static final long serialVersionUID = 1L;
-	private int ucnId;
+	private int ucgId;
 	private Timestamp collectionTime;
-	private Newsinfo newsinfo;
+	private Gameinfo gameinfo;
 	private Userinfo userinfo;
 
 	@Override
-	public int compareTo(Usercollectnew o) {
+	public int compareTo(Usercollectgame o) {
 		if (getCollectionTime() == null || o.getCollectionTime() == null)
 			return 0;
 		return getCollectionTime().compareTo(o.getCollectionTime());
 	}
 
-	public int getUcnId() {
-		return ucnId;
+	public int getUcgId() {
+		return ucgId;
 	}
 
-	public void setUcnId(int ucnId) {
-		this.ucnId = ucnId;
+	public void setUcgId(int ucgId) {
+		this.ucgId = ucgId;
 	}
 
 	public Timestamp getCollectionTime() {
@@ -36,12 +36,12 @@ public class Usercollectnew implements Serializable, Comparable<Usercollectnew>{
 		this.collectionTime = collectionTime;
 	}
 
-	public Newsinfo getNewsinfo() {
-		return newsinfo;
+	public Gameinfo getGameinfo() {
+		return gameinfo;
 	}
 
-	public void setNewsinfo(Newsinfo newsinfo) {
-		this.newsinfo = newsinfo;
+	public void setGameinfo(Gameinfo gameinfo) {
+		this.gameinfo = gameinfo;
 	}
 
 	public Userinfo getUserinfo() {

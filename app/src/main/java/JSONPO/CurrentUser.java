@@ -9,10 +9,7 @@ package JSONPO;
 public class CurrentUser {
     private static Userinfo currentUser;
 
-    public Userinfo getcurrentUser(){
-        currentUser.setAnnounceinfos(null);
-        currentUser.setUsercollectnews(null);
-        currentUser.setUsermessagenews(null);
+    public static Userinfo getcurrentUser(){
         return currentUser;
     }
 

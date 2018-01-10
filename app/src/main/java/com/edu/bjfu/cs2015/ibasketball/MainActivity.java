@@ -33,39 +33,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         showFragment(FRAGMENT_NEWS);
 
-
-//        // 获得控件控制权
-//        Button button = (Button) findViewById(R.id.b_login);
-//        TextView textView = (TextView) findViewById(R.id.tv_loginID);
-//
-//
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                // 定义变量传参
-//                final Userinfo[] userinfo = {null};
-//
-//                // 创建子线程进行数据库操作
-//                Thread t1 = new Thread() {
-//                    public void run() {
-//                        userinfo[0] = Userinfo.getByName("chris");
-//                    }
-//                };
-//                t1.start();
-//                try {
-//                    t1.join();
-//                } catch (InterruptedException e) {
-//                    Log.e("MA2", e.getMessage());
-//                }
-//
-//                // 获得输出参数
-//                // UI操作要在主线程中
-//                textView.setText(userinfo[0].getUserTruname());
-//
-//            }
-//
-//        });
     }
 
     public void initBottomNavigationUI() {
@@ -153,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
                     news = new FragmentNews();
                     ft.add(R.id.fragment_layout_main, news);
                 } else {
+                    // 刷新newsFragment
+                    ft.detach(news);
+                    ft.attach(news);
+//                    ft.commit();
                     ft.show(news);
                 }
 

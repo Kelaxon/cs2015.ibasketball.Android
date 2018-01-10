@@ -1,10 +1,12 @@
 package JSONPO;
 
+import JSONPO.*;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
-public class Newsinfo implements Serializable {
+public class Newsinfo implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private int newsId;
@@ -17,6 +19,8 @@ public class Newsinfo implements Serializable {
 	private Set<Usermessagenew> usermessagenews;
 	private Set<Usercollectnew> usercollectnews;
 
+	
+	
 	public int getNewsId() {
 		return newsId;
 	}
@@ -93,18 +97,4 @@ public class Newsinfo implements Serializable {
 		return serialVersionUID;
 	}
 
-	@Override
-	public String toString() {
-		return "Newsinfo{" +
-				"newsId=" + newsId +
-				", newsTitle='" + newsTitle + '\'' +
-				", newsContent='" + newsContent + '\'' +
-				", newsTime=" + newsTime +
-				", newsPic='" + newsPic + '\'' +
-				", newsCount=" + newsCount +
-				", managerinfo=" + managerinfo +
-				", usermessagenews=" + usermessagenews +
-				", usercollectnews=" + usercollectnews +
-				'}';
-	}
 }
