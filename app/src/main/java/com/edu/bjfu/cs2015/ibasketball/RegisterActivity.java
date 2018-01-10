@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import JDBC.Beans.Userinfo;
+import JSONPO.Userinfo;
 
 public class RegisterActivity extends AppCompatActivity {
     private AutoCompleteTextView mUsernameView;

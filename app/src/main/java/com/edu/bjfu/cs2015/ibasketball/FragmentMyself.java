@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import JDBC.Beans.Userinfo;
+import JSONPO.Userinfo;
 
 /**
  * Created by ChrisYoung on 2017/12/26.

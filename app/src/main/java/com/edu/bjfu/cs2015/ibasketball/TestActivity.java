@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.edu.bjfu.cs2015.ibasketball.UI.FullScreenVideoView;
+import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
 import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
 import com.edu.bjfu.cs2015.ibasketball.tool.LoadImagesTask;
 import com.google.gson.reflect.TypeToken;
@@ -44,7 +45,7 @@ public class TestActivity extends AppCompatActivity {
     private TextView mBrowerButton;
     private TextView textView;
     private ImageView imageView;
-
+    String response;
     private UserinfoMessage uu;
     //图片地址
 
@@ -60,7 +61,6 @@ public class TestActivity extends AppCompatActivity {
         textView= (android.widget.TextView) findViewById(R.id.testView);
          imageView= (ImageView) findViewById(R.id.imageView);
         Button button= (Button) findViewById(R.id.buntton);
-
 
 
         //button1设置json解析
@@ -120,86 +120,24 @@ public class TestActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://172.23.100.219:8088/0-BBBS/UserActionApp.action?username=molinli&password=123456";//这里和GET方式不同的是去掉了“？”后面的参数；
-
-                //volleyPost();
-
-                getVolley();
+                String url = "http://apis.juhe.cn/mobile/get";//这里和GET方式不同的是去掉了“？”后面的参数；
+                //1.设置参数
+                Map map=new HashMap();
+                map.put("phone","13429667914");
+                map.put("key","9719c91bd4ac2647c67c6cd067b5cb8e");
+                HttpConnection.setMap(map);
+                //2.设置组件
+                HttpConnection.setContext(getApplicationContext());
+                //3.设置url
+                HttpConnection.setUrl(url);
+                //4.执行连接
+                HttpConnection.volleyPost();
+                //5.打印结果--响应有延迟，延迟使用getResponse()
+                textView.setText(HttpConnection.getResponse());
             }
         });
     }
 
-    public void volleyPost() {
-        String url = " http://192.168.43.113:2008/0-BBBS/loginApp";//这里和GET方式不同的是去掉了“？”后面的参数；
-        /**
-         * 第一个参数指定了请求方式，第二个参数指定了url，第三个参数指定了正确访问的返回结果，第四个参数是访问失败后的业务逻辑；
-         *
-         */
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String result) {
-                textView.setText(result);//返回结果显示在TextView;
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                if(volleyError==null)
-                    Log.e("tag3", "空");
-                else{
-                    volleyError.printStackTrace();
-                    Log.e("tag3",volleyError.getMessage() );
-                }
-                textView.setText("未能请求到数据");
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {//在这里封装了需要发送的参数；
-                Log.e("tag?","Z");
-                HashMap<String, String> map = new HashMap<>();
-                map.put("UA", "1");
-                map.put("userName", "molinli");//以键值对的形式存放；
-                map.put("userPassword", "123456");
-                return map;
-            }
-        };
-        request.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 50000;
-            }
-
-            @Override
-            public int getCurrentRetryCount() {
-                return 50000;
-            }
-
-            @Override
-            public void retry(VolleyError error) throws VolleyError {
-
-            }
-        });
-        Volley.newRequestQueue(getApplicationContext()).add(request);//加入请求队列；
-    }//volleyPost();
-
-    public void getVolley() {
-        /**
-         * 开始进行网络请求，设置相应的请求参数；
-         */
-        String url = "http://192.168.43.113:2008/0-BBBS/loginApp?UA=1&userName=molinli&userPassword=123456";
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String result) {//请求成功时回调onResponse();
-                textView.setText(result);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {//请求成功时回调onErrorResponse();
-                Log.e("tag2", volleyError.getMessage());
-                textView.append("不能成功从服务器获取消息");
-            }
-        });
-        Volley.newRequestQueue(getApplicationContext()).add(request);//把请求放入到请求队列中；
-    }
 
 }
 

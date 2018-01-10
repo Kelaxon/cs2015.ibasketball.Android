@@ -14,7 +14,7 @@ import com.edu.bjfu.cs2015.ibasketball.R;
 
 import java.util.List;
 
-import JDBC.Beans.Newsinfo;
+import JSONPO.Newsinfo;
 
 /**
  * Created by ChrisYoung on 2017/12/26.

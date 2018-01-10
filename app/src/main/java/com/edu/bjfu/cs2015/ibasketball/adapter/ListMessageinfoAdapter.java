@@ -12,7 +12,7 @@ import com.edu.bjfu.cs2015.ibasketball.R;
 
 import java.util.List;
 
-import JDBC.Beans.Usermessagenews;
+import JSONPO.UserinfoMessage;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
@@ -20,9 +20,9 @@ import JDBC.Beans.Usermessagenews;
 
 public class ListMessageinfoAdapter extends RecyclerView.Adapter<ListMessageinfoAdapter.ViewHolder> implements View.OnClickListener {
     private Context mContext;
-    private List<Usermessagenews> mMessageList;
+    private List<UserinfoMessage> mMessageList;
 
-    public ListMessageinfoAdapter(List<Usermessagenews> list, Context context){
+    public ListMessageinfoAdapter(List<UserinfoMessage> list, Context context){
         this.mMessageList = list;
         this.mContext = context;
     }
@@ -45,7 +45,7 @@ public class ListMessageinfoAdapter extends RecyclerView.Adapter<ListMessageinfo
 
     //定义点击item接口
     public static interface OnRecyclerViewItemClickListener{
-        void onItemClick(View view, Usermessagenews bean);
+        void onItemClick(View view, UserinfoMessage bean);
     }
 
     //添加接口
@@ -59,7 +59,7 @@ public class ListMessageinfoAdapter extends RecyclerView.Adapter<ListMessageinfo
     @Override
     public void onClick(View v) {
         if(mOnRecyclerViewItemClickListener != null){
-            mOnRecyclerViewItemClickListener.onItemClick(v, (Usermessagenews)v.getTag());
+            mOnRecyclerViewItemClickListener.onItemClick(v, (UserinfoMessage)v.getTag());
         }
     }
 
