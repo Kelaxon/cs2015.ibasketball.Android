@@ -86,10 +86,12 @@ public class ListGamesAdapter extends RecyclerView.Adapter<ListGamesAdapter.View
     // 为每一个view
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+
+        // TODO  holder的各种view set
         holder.mGameTime.setText((CharSequence) mGameinfoList.get(position).getGameTime());
-        holder.mTeam1Name.setText((CharSequence) mGameinfoList.get(position).getGameTeam1());
-        holder.mTeam2Name.setText((CharSequence) mGameinfoList.get(position).getGameTeam2());
-        // TODO  holder的各种view要通过JDBC操作来set
+        holder.mTeam1Name.setText((CharSequence) mGameinfoList.get(position).getTeaminfoByGameTeam1Id().getTeamName());
+        holder.mTeam2Name.setText((CharSequence) mGameinfoList.get(position).getTeaminfoByGameTeam2Id().getTeamName());
+
 //
         //holder.mTeam1result.setText((CharSequence) mGameinfoList.get(position).getGameResult());
         //  holder.mNewsShortContent.setText((CharSequence) mGameinfoList.get(position).get("pname"));

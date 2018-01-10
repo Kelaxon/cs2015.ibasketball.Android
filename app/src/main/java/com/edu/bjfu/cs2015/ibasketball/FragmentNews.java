@@ -1,5 +1,6 @@
 package com.edu.bjfu.cs2015.ibasketball;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,8 @@ import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
 import java.util.List;
 
 import JSONPO.Newsinfo;
+import JSONPO.Usermessagenew;
+
 /**
  * Created by ChrisYoung on 2017/12/27.
  */
@@ -48,47 +51,56 @@ public class FragmentNews extends Fragment {
 
         // 获取数据
         mNewsInfoList = listAll();
-        mNewsInfoAdapter = new ListNewsinfoAdapter(mNewsInfoList,getActivity() );
+        mNewsInfoAdapter = new ListNewsinfoAdapter(mNewsInfoList, getActivity());
 
 
         //设置Adapter
         mRecyclerView.setAdapter(mNewsInfoAdapter);
+        mNewsInfoAdapter.setOnRecyclerViewItemClickListener(new ListNewsinfoAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, Newsinfo newsinfo) {
+                int newsId = newsinfo.getNewsId();
+                Intent i = new Intent(getActivity(), DetailNewsActivity.class);
+                i.putExtra("newsId", newsId);
+                startActivity(i);
+            }
+        });
 
         return view;
     }
 
-    public List<Newsinfo> listAll() throws InterruptedException {
+        public List<Newsinfo> listAll () throws InterruptedException {
 
-        // 传入参数
-        List<Newsinfo> newsInfoList = null;
-        infoMessage = "";
+            // 传入参数
+            List<Newsinfo> newsInfoList = null;
+            infoMessage = "";
 
 
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
+            Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
 
-                // TODO Post Response操作获取所有新闻
-                Action listAllAction = new listAllAction("news");
-                HttpConnection.execute(listAllAction);
-                String reponse = HttpConnection.getResponse();
-                infoMessage = HttpConnection.get ??;
-                newsInfoList = ???
+                    // TODO Post Response操作获取所有新闻
+                    Action listAllAction = new listAllAction("news");
+                    HttpConnection.execute(listAllAction);
+                    String reponse = HttpConnection.getResponse();
+                    infoMessage = HttpConnection.get ??;
+                    newsInfoList = ???
+                }
+            });
+
+            t1.start();
+            t1.join();
+
+            // 传出参数
+            if (newsInfoList == null) {
+                Toast.makeText(getActivity(), infoMessage, Toast.LENGTH_SHORT).show();
+                return null;
+            } else {
+                return newsInfoList;
             }
-        });
-
-        t1.start();
-        t1.join();
-
-        // 传出参数
-        if(mNewsInfoList==null){
-            Toast.makeText(getActivity(), infoMessage, Toast.LENGTH_SHORT).show();
-            return null;
-        }else{
-            return newsInfoList;
         }
-    }
 
-}
+    }
 
 
