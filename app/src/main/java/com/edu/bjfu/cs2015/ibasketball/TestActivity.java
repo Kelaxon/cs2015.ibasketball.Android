@@ -45,7 +45,6 @@ public class TestActivity extends AppCompatActivity {
     private TextView mBrowerButton;
     private TextView textView;
     private ImageView imageView;
-    String response;
     private UserinfoMessage uu;
     //图片地址
 
