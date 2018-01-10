@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.edu.bjfu.cs2015.ibasketball.R;
+import com.edu.bjfu.cs2015.ibasketball.tool.LoadImagesTask;
 
 import java.util.List;
 
@@ -41,9 +42,11 @@ public class ListGamesAdapter extends RecyclerView.Adapter<ListGamesAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mGameTime = (TextView) itemView.findViewById(R.id.tv_game_time);
+            //图片
             mTeam1Logo = (ImageView) itemView.findViewById(R.id.iv_team1_logo);
             mTeam2Logo = (ImageView) itemView.findViewById(R.id.iv_team2_logo);
+            //文字
+            mGameTime = (TextView) itemView.findViewById(R.id.tv_game_time);
             mTeam1Name = (TextView) itemView.findViewById(R.id.tv_team1_name);
             mTeam2Name = (TextView) itemView.findViewById(R.id.tv_team2_name);
             mTeam1result = (TextView) itemView.findViewById(R.id.tv_team1_score);
@@ -87,12 +90,17 @@ public class ListGamesAdapter extends RecyclerView.Adapter<ListGamesAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        // TODO  holder的各种view set
+        // TODO  holder的各种view set modify by molinli
         holder.mGameTime.setText((CharSequence) mGameinfoList.get(position).getGameTime());
         holder.mTeam1Name.setText((CharSequence) mGameinfoList.get(position).getTeaminfoByGameTeam1Id().getTeamName());
         holder.mTeam2Name.setText((CharSequence) mGameinfoList.get(position).getTeaminfoByGameTeam2Id().getTeamName());
+        holder.mTeam1result.setText(mGameinfoList.get(position).getGameTeam1result());
+        holder.mTeam2result.setText(mGameinfoList.get(position).getGameTeam2result());
+        //加载图片
+        new LoadImagesTask(holder.mTeam1Logo).execute(mGameinfoList.get(position).getTeaminfoByGameTeam1Id().getTeamLogo());
+        new LoadImagesTask(holder.mTeam2Logo).execute(mGameinfoList.get(position).getTeaminfoByGameTeam2Id().getTeamLogo());
 
-//
+        //
         //holder.mTeam1result.setText((CharSequence) mGameinfoList.get(position).getGameResult());
         //  holder.mNewsShortContent.setText((CharSequence) mGameinfoList.get(position).get("pname"));
 //        Picasso.with( mContext).load(mGameinfoList.get(position).getAVFile("TitleImage") == null ? "NO PICTURE" : mGameinfoList.get(position).getAVFile("TitleImage").getUrl()).transform(new RoundedTransformation(9,0)).into(holder.mNewsPic);

@@ -92,7 +92,7 @@ public class FragmentNews extends Fragment {
             Thread t1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    // TODO Post Response操作获取所有新闻 modify
+                    // TODO Post Response操作获取所有新闻 modify by molinli
                     Action listAllAction = new ListAllAction("news");
                     //获取到当前contenxt
                     listAllAction.setContext(getContext());

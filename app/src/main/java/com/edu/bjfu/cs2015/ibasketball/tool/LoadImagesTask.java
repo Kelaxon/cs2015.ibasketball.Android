@@ -13,7 +13,7 @@ import java.net.URL;
 /**
  * 装载网络图片工具
  *
- *      使用方法：
+ *      使用方法：一句话搞定
  *         在主进程控件里调用 new LoadImagesTask(imageView).execute(Url_str);
  * Created by 莫林立 on 2018/1/4.
  */

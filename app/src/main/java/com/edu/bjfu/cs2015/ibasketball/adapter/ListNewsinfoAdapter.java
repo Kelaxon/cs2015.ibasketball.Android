@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.edu.bjfu.cs2015.ibasketball.R;
+import com.edu.bjfu.cs2015.ibasketball.tool.LoadImagesTask;
 
 
 import java.util.List;
@@ -78,7 +79,12 @@ public class ListNewsinfoAdapter extends RecyclerView.Adapter<ListNewsinfoAdapte
     // 为每一个view
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        // TODO  holder的各种view要通过JDBC操作来set
+        // TODO  holder的各种view要通过JDBC操作来set modify by molinli
+        holder.mNewsShortContent.setText(mNewsinfoList.get(position).getNewsContent());
+        holder.mNewsTitle.setText(mNewsinfoList.get(position).getNewsTitle());
+        //图片
+        new LoadImagesTask(holder.mNewsPic).execute(mNewsinfoList.get(position).getNewsPic());
+
 //        holder.mNewsShortContent.setText((CharSequence) mNewsinfoList.get(position).get("pname"));
 //        Picasso.with( mContext).load(mNewsinfoList.get(position).getAVFile("TitleImage") == null ? "NO PICTURE" : mNewsinfoList.get(position).getAVFile("TitleImage").getUrl()).transform(new RoundedTransformation(9,0)).into(holder.mNewsPic);
 //        holder.itemView.setTag(mNewsinfoList.get(position));

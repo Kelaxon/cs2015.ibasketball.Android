@@ -35,26 +35,28 @@ public class FragmentMyself extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_myself, container, false);
 
         // TODO 1.赋值 2.ClickListener
-
+        //获取到当前用户信息
         mUser = CurrentUser.getcurrentUser();
 
         mButtonMessage = (LinearLayout) view.findViewById(R.id.b_user_message);
         mButtonCollection = (LinearLayout) view.findViewById(R.id.b_user_collection);
+        //get 到当前的各种view
         mButtonUpdateInfo = (ImageView) view.findViewById(R.id.iv_user_avatar);
         mButtonLogout = (ImageView) view.findViewById(R.id.iv_logout);
+        mUserAvatorView = (ImageView) view.findViewById(R.id.iv_user_avatar);
+        mUsernameView = (TextView) view.findViewById(R.id.tv_user_name);
+        //设置监听
         mButtonMessage.setOnClickListener(this);
         mButtonCollection.setOnClickListener(this);
         mButtonUpdateInfo.setOnClickListener(this);
         mButtonLogout.setOnClickListener(this);
-
-        mUserAvatorView = (ImageView) view.findViewById(R.id.iv_user_avatar);
-        mUsernameView = (TextView) view.findViewById(R.id.tv_user_name);
 
         // 加载头像
         new LoadImagesTask(mUserAvatorView).execute(mUser.getUserAddr());
         mUsernameView.setText(mUser.getUserName());
         // TODO 加载其他信息
         // ...
+
 
         return view;
     }
