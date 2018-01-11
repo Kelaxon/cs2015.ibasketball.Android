@@ -9,6 +9,7 @@ import android.content.Context;
 public class RegisterAction implements Action {
     private String URL = Action.Domain+"registerApp.action";
     private Context context;
+    private String param = "infoMessage";
 
     @Override
     public String getUrl() {
@@ -24,5 +25,6 @@ public class RegisterAction implements Action {
     public void setContext(Context context) {
         this.context = context;
     }
+
 
 }

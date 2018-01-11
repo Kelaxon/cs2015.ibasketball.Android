@@ -9,6 +9,7 @@ import android.content.Context;
 public class LoginAction implements Action {
     private String url=Action.Domain+"loginApp.action";
     private Context context;
+    private String param = "userinfo";
 
     @Override
     public String getUrl() {

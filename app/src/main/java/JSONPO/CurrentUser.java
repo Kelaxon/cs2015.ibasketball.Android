@@ -9,6 +9,10 @@ package JSONPO;
 public class CurrentUser {
     private static Userinfo currentUser;
 
+    private CurrentUser(){
+
+    }
+
     public static Userinfo getcurrentUser(){
         return currentUser;
     }

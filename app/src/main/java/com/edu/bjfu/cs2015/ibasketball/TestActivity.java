@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-import JSONPO.UserinfoMessage;
+import JSONPO.Userinfo;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 import static com.edu.bjfu.cs2015.ibasketball.tool.JsonToString.JsonToString;
@@ -37,7 +37,7 @@ public class TestActivity extends AppCompatActivity {
     private TextView mBrowerButton;
     private TextView textView;
     private ImageView imageView;
-    private UserinfoMessage uu;
+    private Userinfo uu;
     //图片地址
 
     private static android.content.Context context;
@@ -61,11 +61,10 @@ public class TestActivity extends AppCompatActivity {
                 String str="这是空的";
 
                 //泛型使用
-                JsonToInstance<UserinfoMessage> jsonToInstance=new JsonToInstance<UserinfoMessage>();
+                JsonToInstance<Userinfo> jsonToInstance=new JsonToInstance<Userinfo>();
 
-                Type type=new TypeToken<UserinfoMessage>(){}.getType();
-
-                UserinfoMessage userinfo=jsonToInstance.ToInstance(JsonToString(TestActivity.this.getResources()),type);
+                Type type=new TypeToken<Userinfo>(){}.getType();
+                Userinfo userinfo=jsonToInstance.ToInstance(JsonToString(TestActivity.this.getResources()),type);
 
                 if(userinfo!=null){
                     textView.setText("JSON解析成功！");

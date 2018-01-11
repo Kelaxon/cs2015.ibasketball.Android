@@ -1,5 +1,6 @@
 package com.edu.bjfu.cs2015.ibasketball;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,7 +36,6 @@ public class FragmentNews extends Fragment {
     private List<Newsinfo> mNewsInfoList;  //所有新闻数据
     private String infoMessage;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,23 +52,30 @@ public class FragmentNews extends Fragment {
         //设置item的动画，可以不设置
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // 获取数据
-        //mNewsInfoList = listAll();
-//
-//        mNewsInfoAdapter = new ListNewsinfoAdapter(mNewsInfoList, getActivity());
-//
-//
-//        //设置Adapter
-//        mRecyclerView.setAdapter(mNewsInfoAdapter);
-//        mNewsInfoAdapter.setOnRecyclerViewItemClickListener(new ListNewsinfoAdapter.OnRecyclerViewItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, Newsinfo newsinfo) {
-//                int newsId = newsinfo.getNewsId();
-//                Intent i = new Intent(getActivity(), DetailNewsActivity.class);
-//                i.putExtra("newsId", newsId);
-//                startActivity(i);
-//            }
-//        });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 获取数据
+                mNewsInfoList = listAll();
+
+                mNewsInfoAdapter = new ListNewsinfoAdapter(mNewsInfoList, getActivity());
+
+
+                //设置Adapter
+                mRecyclerView.setAdapter(mNewsInfoAdapter);
+                mNewsInfoAdapter.setOnRecyclerViewItemClickListener(new ListNewsinfoAdapter.OnRecyclerViewItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, Newsinfo newsinfo) {
+                        int newsId = newsinfo.getNewsId();
+                        Intent i = new Intent(getActivity(), DetailNewsActivity.class);
+                        i.putExtra("newsId", newsId);
+                        startActivity(i);
+                    }
+                });
+            }
+        });
+
+
 
         return view;
     }
@@ -76,14 +83,10 @@ public class FragmentNews extends Fragment {
 
     public List<Newsinfo> listAll() {
 
-//            // 传入参数
         final List<Newsinfo>[] newsInfoList = new List[]{null};
         infoMessage = "";
 
 
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
                 // TODO Post Response操作获取所有新闻 modify by molinli
                 Action listAllAction = new ListAllAction("news");
                 //获取到当前contenxt
@@ -101,13 +104,6 @@ public class FragmentNews extends Fragment {
                 //这个变量的作用域要修改一下
                 newsInfoList[0] = jsonToInstance.ToInstance(reponse, typeForParam);
             }
-        });
-
-        t1.start();
-        try {
-            t1.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
 
         // 传出参数

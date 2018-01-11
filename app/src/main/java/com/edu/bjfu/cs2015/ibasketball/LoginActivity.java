@@ -14,9 +14,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.edu.bjfu.cs2015.ibasketball.UI.FullScreenVideoView;
 import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
 import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -127,8 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // 传入参数
 
-            String infoMessage = "";
-
+            String infoMessage = "错误";
 
             HttpConnection.setMap(map);
             // TODO 用依赖注入实现不同方法的excecute(命令模式) modify by molinli
@@ -143,16 +144,20 @@ public class LoginActivity extends AppCompatActivity {
 
             HttpConnection.execute(userLoginAction, mapInfo, new ServerCallback() {
                 @Override
-                public void onSuccess(String reponse) {
+                public void onSuccess(JsonObject reponse) {
+
+                }
+
+                @Override
+                public void onSuccess(JsonObject reponse) {
                     Userinfo userinfo = null;
                     if (reponse != null) {
                         Log.e("LogJson2", reponse + "");
                         JsonToInstance<Userinfo> jsonToInstance = new JsonToInstance();
                         //get类型
-                        Type typeForParam = new TypeToken<Userinfo>() {
-                        }.getType();
-                        //
-                        userinfo = jsonToInstance.ToInstance(reponse, typeForParam);
+                        Type typeForParam = new TypeToken<Userinfo>() {}.getType();
+                        //传入去掉头部的json String 进行解析
+                        userinfo = jsonToInstance.ToInstance(reponse.getAsString(), typeForParam);
                     }
                     // 有错情况
                     if (userinfo == null) {
@@ -160,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     } else {
                         // 无错情况
-                        Log.e("userInstance", userinfo.getUserName());
+                        Log.e("userInstance", userinfo.getUserName()+"");
                         CurrentUser.setCurrentUser(userinfo);
                         LoginActivity.this.finish();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));

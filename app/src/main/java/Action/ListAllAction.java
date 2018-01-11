@@ -12,8 +12,11 @@ public class ListAllAction implements Action {
 
     public ListAllAction(String type) {
 
-        if (type.equals("news"))
+        if (type.equals("news")){
+
             URL += "listNewsAllApp.action";
+        }
+
         if (type.equals("message"))
             URL += "listMessageAllApp.action";
     }
@@ -28,9 +31,11 @@ public class ListAllAction implements Action {
         return context;
     }
 
+
     @Override
     public void setContext(Context context) {
         this.context = context;
     }
+
 
 }
