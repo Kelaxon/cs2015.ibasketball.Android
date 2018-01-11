@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
 
 import java.util.Map;
 
@@ -90,7 +91,11 @@ public class HttpConnection {
         StringRequest request = new StringRequest(Request.Method.POST, action.getUrl(), new Response.Listener<String>() {
 
             @Override
-            public void onResponse(JsonObjectRequest result){
+            public void onResponse(String response) {
+
+            }
+
+            public void onResponse(JsonObject result){
                 callback.onSuccess(result);
         }
     },new Response.ErrorListener()

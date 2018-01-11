@@ -143,22 +143,24 @@ public class LoginActivity extends AppCompatActivity {
             mapInfo.put("userPassword", password);
 
             HttpConnection.execute(userLoginAction, mapInfo, new ServerCallback() {
-                @Override
-                public void onSuccess(JsonObject reponse) {
-
-                }
 
                 @Override
                 public void onSuccess(JsonObject reponse) {
+
                     Userinfo userinfo = null;
+
                     if (reponse != null) {
                         Log.e("LogJson2", reponse + "");
+
                         JsonToInstance<Userinfo> jsonToInstance = new JsonToInstance();
+
                         //get类型
                         Type typeForParam = new TypeToken<Userinfo>() {}.getType();
+
                         //传入去掉头部的json String 进行解析
-                        userinfo = jsonToInstance.ToInstance(reponse.getAsString(), typeForParam);
+                        userinfo = jsonToInstance.ToInstance(reponse.get("userinfo").toString(), typeForParam);
                     }
+
                     // 有错情况
                     if (userinfo == null) {
                         Toast.makeText(LoginActivity.this, infoMessage, Toast.LENGTH_SHORT).show();
@@ -193,25 +195,7 @@ public class LoginActivity extends AppCompatActivity {
 //            //infoMessage = HttpConnection.get ??;
 //
 //            // TODO 获得用户对象 modify by molinli
-//            if (reponse != null) {
-//                JsonToInstance<Userinfo> jsonToInstance = new JsonToInstance();
-//                //get类型
-//                Type typeForParam = new TypeToken<UserinfoMessage>() {
-//                }.getType();
-//                //
-//                userinfo[0] = jsonToInstance.ToInstance(reponse, typeForParam);
-//            }
-//
-//            // 有错情况
-//            if (userinfo[0] == null) {
-//                Toast.makeText(LoginActivity.this, infoMessage, Toast.LENGTH_SHORT).show();
-//
-//            } else {
-//                // 无错情况
-//                CurrentUser.setCurrentUser(userinfo[0]);
-//                LoginActivity.this.finish();
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//            }
+
 
 
 //    }

@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +17,19 @@ import android.widget.Toast;
 import com.edu.bjfu.cs2015.ibasketball.adapter.ListNewsinfoAdapter;
 import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
 import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import Action.Action;
 import Action.ListAllAction;
 import JSONPO.Newsinfo;
+
+import Action.ServerCallback;
+import JSONPO.Userinfo;
 
 /**
  * Created by ChrisYoung on 2017/12/27.
@@ -67,7 +73,7 @@ public class FragmentNews extends Fragment {
                     @Override
                     public void onItemClick(View view, Newsinfo newsinfo) {
                         int newsId = newsinfo.getNewsId();
-                        Intent i = new Intent(getActivity(), DetailNewsActivity.class);
+                        Intent i = new Intent(getActivity(), MainActivity.class);
                         i.putExtra("newsId", newsId);
                         startActivity(i);
                     }
@@ -80,39 +86,67 @@ public class FragmentNews extends Fragment {
         return view;
     }
 
+    List<Newsinfo> newsInfoList = new ArrayList<>();
 
     public List<Newsinfo> listAll() {
 
-        final List<Newsinfo>[] newsInfoList = new List[]{null};
         infoMessage = "";
 
+        // TODO Post Response操作获取所有新闻 modify by molinli
+        Action listAllAction = new ListAllAction("news");
+        //获取到当前contenxt
+        listAllAction.setContext(getContext());
+        //请你指定http请求参数
+        //申请http
+        HttpConnection.execute(listAllAction, null, new ServerCallback() {
+            @Override
+            public void onSuccess(JsonObject reponse) {
 
-                // TODO Post Response操作获取所有新闻 modify by molinli
-                Action listAllAction = new ListAllAction("news");
-                //获取到当前contenxt
-                listAllAction.setContext(getContext());
-                //请你指定http请求参数
-                //申请http
-                //HttpConnection.execute(listAllAction, null); // getNews不需要参数
-                //获取响应 json文件
-                String reponse = HttpConnection.getResponse();
+                //处理response
+                if (reponse != null) {
+                    Log.e("LogJson2", reponse + "");
 
-                JsonToInstance<List<Newsinfo>> jsonToInstance = new JsonToInstance();
-                //get类型
-                Type typeForParam = new TypeToken<List<Newsinfo>>() {
-                }.getType();
-                //这个变量的作用域要修改一下
-                newsInfoList[0] = jsonToInstance.ToInstance(reponse, typeForParam);
+                    JsonToInstance<List<Newsinfo>> jsonToInstance = new JsonToInstance();
+                    //get类型
+                    Type typeForParam = new TypeToken<List<Newsinfo>>() {}.getType();
+                    //传入去掉头部的json String 进行解析
+                    newsInfoList = jsonToInstance.ToInstance(reponse.get("userinfo").toString(), typeForParam);
+                }
+
+                if (newsInfoList != null) {
+                    Log.e("LogJson2", reponse + ""+"newsInfoList is null!");
+
+                } else {
+                    // 无错情况
+                    Log.e("newsInfoList", newsInfoList.toString()+"");
+                }
             }
-        }
+
+        });
+
+        // getNews不需要参数
+
+        //获取响应 json文件
+//        String reponse = HttpConnection.getResponse();
+//
+//        JsonToInstance<List<Newsinfo>> jsonToInstance = new JsonToInstance();
+//        //get类型
+//        Type typeForParam = new TypeToken<List<Newsinfo>>() {
+//        }.getType();
+
+        //这个变量的作用域要修改一下
+//        newsInfoList.set(0, (Newsinfo) jsonToInstance.ToInstance(reponse, typeForParam));
 
         // 传出参数
-        if (newsInfoList[0].get(0) == null) {
+        if (newsInfoList.get(0) == null) {
             Toast.makeText(getActivity(), infoMessage, Toast.LENGTH_SHORT).show();
             return null;
         } else {
-            return newsInfoList[0];
+            return newsInfoList;
         }
+
+
+
     }
 
 }
