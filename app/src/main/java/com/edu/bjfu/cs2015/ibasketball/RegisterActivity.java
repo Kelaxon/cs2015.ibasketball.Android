@@ -88,6 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
 //            }
 
             // TODO register 暂不实现
+
             //if(Userinfo.addUser(user)){
             //  注册成功，把用户对象赋值给当前用户 Userinfo.getCurrentUser()
             //  startActivity(new Intent(RegisterActivity.this, ActivityMain.class));

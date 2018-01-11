@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,13 +23,15 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-import INTERFACE.Action;
+import Action.Action;
+import Action.LoginAction;
+import Action.ServerCallback;
 import JSONPO.CurrentUser;
 import JSONPO.Userinfo;
-import JSONPO.UserinfoMessage;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-import Action.ActionLogin;
+;
+
 /**
  * Created by ChrisYoung on 2017/12/27.
  */
@@ -59,25 +58,25 @@ public class LoginActivity extends AppCompatActivity {
         // 登陆框的listener
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.tv_username);
         mPasswordView = (EditText) findViewById(R.id.et_password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.tv_username || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+
+        // 默认
+        mUsernameView.setText("molinli");
+        mPasswordView.setText("123456");
+
 
         // 登陆按钮的listener
         mLoginButton = (FancyButton) findViewById(R.id.b_login);
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
-                Intent intent = new Intent(LoginActivity.this, TestActivity.class);
-                startActivity(intent);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        attemptLogin();
+
+                    }
+                }).start();
+
             }
         });
 
@@ -108,9 +107,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void attemptLogin() throws InterruptedException {
-        mUsernameView.setError(null);
-        mPasswordView.setError(null);
+    private void attemptLogin() {
 
         final String username = mUsernameView.getText().toString();
         final String password = mPasswordView.getText().toString();
@@ -129,73 +126,90 @@ public class LoginActivity extends AppCompatActivity {
             map.put("userPassword", password);
 
             // 传入参数
-            final Userinfo[] userinfo = {null};
+
             String infoMessage = "";
 
-            Thread t1 = new Thread(new Runnable() {
+
+            HttpConnection.setMap(map);
+            // TODO 用依赖注入实现不同方法的excecute(命令模式) modify by molinli
+            Action userLoginAction = new LoginAction();
+
+            //获取到当前contenxt
+            userLoginAction.setContext(getApplicationContext());
+            //请你指定http请求参数
+            Map mapInfo = new HashMap();
+            mapInfo.put("userName", username);
+            mapInfo.put("userPassword", password);
+
+            HttpConnection.execute(userLoginAction, mapInfo, new ServerCallback() {
                 @Override
-                public void run() {
-                    HttpConnection.setMap(map);
-
-                    // TODO 用依赖注入实现不同方法的excecute(命令模式) modify by molinli
-                    Action userLoginAction = new ActionLogin();
-
-                    //获取到当前contenxt
-                    userLoginAction.setContext(getApplicationContext());
-                    //你要在这里设置url
-                    userLoginAction.setUrl("");
-                    //请你指定http请求参数
-                    Map mapInfo=new HashMap();
-                    mapInfo.put("key","value");
-                    //申请http
-                    HttpConnection.execute(userLoginAction,mapInfo);
-                    //获取响应 json文件
-                    String reponse = HttpConnection.getResponse();
-                    //请问你要get什么？
-                   //infoMessage = HttpConnection.get ??;
-
-                    // TODO 获得用户对象 modify by molinli
+                public void onSuccess(String reponse) {
+                    Userinfo userinfo = null;
                     if (reponse != null) {
-                        Type type = new TypeToken<Userinfo>() {
-                        }.getType();
-
+                        Log.e("LogJson2", reponse + "");
                         JsonToInstance<Userinfo> jsonToInstance = new JsonToInstance();
                         //get类型
-                        Type typeForParam=new TypeToken<UserinfoMessage>(){}.getType();
+                        Type typeForParam = new TypeToken<Userinfo>() {
+                        }.getType();
                         //
-                        Userinfo userinfoGet=jsonToInstance.ToInstance(reponse,typeForParam);
-
-                       //userinfo[0] = jsonToInstance.JsonToInstance ????
+                        userinfo = jsonToInstance.ToInstance(reponse, typeForParam);
                     }
+                    // 有错情况
+                    if (userinfo == null) {
+                        Toast.makeText(LoginActivity.this, infoMessage, Toast.LENGTH_SHORT).show();
 
+                    } else {
+                        // 无错情况
+                        Log.e("userInstance", userinfo.getUserName());
+                        CurrentUser.setCurrentUser(userinfo);
+                        LoginActivity.this.finish();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                    }
                 }
             });
-            t1.start();
-            t1.join();
-
-
-            // 有错情况
-            if (userinfo[0] == null) {
-                Toast.makeText(LoginActivity.this, infoMessage, Toast.LENGTH_SHORT).show();
-
-            } else {
-                // 无错情况
-                CurrentUser.setCurrentUser(userinfo[0]);
-                LoginActivity.this.finish();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            }
+//                        HttpConnection.execute(userLoginAction, mapInfo);
+//                        if (HttpConnection.getResponse() == null)
+//                            try {
+//                                Thread.sleep(1000);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                        else
+//                            break;
         }
+        //获取响应 json文件
+
     }
+//            String reponse = HttpConnection.getResponse();
+//            HttpConnection.setResponse(null);
+//            Log.e("tag1", reponse);
+//            //请问你要get什么？
+//            //infoMessage = HttpConnection.get ??;
+//
+//            // TODO 获得用户对象 modify by molinli
+//            if (reponse != null) {
+//                JsonToInstance<Userinfo> jsonToInstance = new JsonToInstance();
+//                //get类型
+//                Type typeForParam = new TypeToken<UserinfoMessage>() {
+//                }.getType();
+//                //
+//                userinfo[0] = jsonToInstance.ToInstance(reponse, typeForParam);
+//            }
+//
+//            // 有错情况
+//            if (userinfo[0] == null) {
+//                Toast.makeText(LoginActivity.this, infoMessage, Toast.LENGTH_SHORT).show();
+//
+//            } else {
+//                // 无错情况
+//                CurrentUser.setCurrentUser(userinfo[0]);
+//                LoginActivity.this.finish();
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//            }
+
+
 //    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 
     public void initUI() {

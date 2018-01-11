@@ -15,9 +15,7 @@ public class JsonToInstance<T> {
     public  T ToInstance(String JsonString, Type type){
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-
         T t = gson.fromJson(JsonString, type);
-
         return t;
     }
 

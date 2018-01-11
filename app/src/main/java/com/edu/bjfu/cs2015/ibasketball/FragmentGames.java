@@ -23,10 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import INTERFACE.Action;
+import Action.Action;
 import JSONPO.Gameinfo;
 import Action.ListAllAction;
-import JSONPO.Newsinfo;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
@@ -73,7 +72,7 @@ public class FragmentGames extends Fragment implements SearchView.SearchViewList
         Map mapInfo=new HashMap();
         mapInfo.put("key","value");
         //申请http
-        HttpConnection.execute(listAllAction,mapInfo);
+        //HttpConnection.execute(listAllAction,mapInfo);
         //获取响应 json文件
         String reponse = HttpConnection.getResponse();
         //创建json解析实例
@@ -111,7 +110,7 @@ public class FragmentGames extends Fragment implements SearchView.SearchViewList
                 Map mapInfo=new HashMap();
                 mapInfo.put("key","value");
                 //申请http
-                HttpConnection.execute(listAllAction,mapInfo);
+                //HttpConnection.execute(listAllAction,mapInfo);
                 //获取响应 json文件
                 String reponse = HttpConnection.getResponse();
                 //创建json解析实例

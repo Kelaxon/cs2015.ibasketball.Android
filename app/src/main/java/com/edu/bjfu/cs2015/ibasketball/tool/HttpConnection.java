@@ -11,21 +11,23 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import INTERFACE.Action;
-
+import Action.ServerCallback;
+import Action.Action;
 /**
  * Created by 莫林立 on 2018/1/6.
  */
 
 public class HttpConnection {
 
-    private static Map map=null;        //3.请求参数
-    private static String url=null;     //1.url地址
-    private static String response="没有响应";        //响应
-    private static Context context=null;        //2.组件内容
+    private static Map map = null;        //3.请求参数
+    private static String url = null;     //1.url地址
+    private static String response;        //响应
+    private static Context context = null;        //2.组件内容
+
+
+
 
     public static Map getMap() {
         return map;
@@ -62,32 +64,43 @@ public class HttpConnection {
     //volleyPost请求 设置
     public static void volleyPost() {
 
+    }
+
+    //获取到url 和 context 提供参数
+    public static void execute(Action action, Map mapInfo, final ServerCallback callback) {
+
+        mapInfo.put("UA", "1");
+        context = action.getContext();
+        map = mapInfo;
+        Log.e("url", action.getUrl());
+
+
         /**
          * 第一个参数指定了请求方式，第二个参数指定了url，第三个参数指定了正确访问的返回结果，第四个参数是访问失败后的业务逻辑；
          *
          */
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, action.getUrl(), new Response.Listener<String>() {
+
             @Override
             public void onResponse(String result) {
-                response=result;
-                setResponse(result);
+                Log.e("tagJson", result+"");
+                callback.onSuccess(result);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                if(volleyError==null)
+                if (volleyError == null)
                     Log.e("tag3", "空");
-                else{
+                else {
                     volleyError.printStackTrace();
-                    Log.e("tag3",volleyError.getMessage() );
+                    Log.e("tag3", volleyError.getMessage());
                 }
                 setResponse("未能请求到数据");
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {//在这里封装了需要发送的参数；
-                Log.e("tag?","Z");
-                Map<String,String> mapinfo=getMap();
+                Map<String, String> mapinfo = getMap();
                 return mapinfo;
             }
         };
@@ -108,15 +121,8 @@ public class HttpConnection {
             }
         });
         Volley.newRequestQueue(context).add(request);
-    }
 
-    //获取到url 和 context 提供参数
-    public static void execute(Action action,Map mapInfo){
-        url=action.getUrl();
-        context=action.getContext();
-        map=mapInfo;
 
-        volleyPost();
     }
 
 }

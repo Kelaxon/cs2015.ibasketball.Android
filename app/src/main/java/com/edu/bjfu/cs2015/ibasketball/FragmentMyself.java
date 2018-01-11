@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.edu.bjfu.cs2015.ibasketball.tool.LoadImagesTask;
@@ -23,8 +24,8 @@ import JSONPO.Userinfo;
 public class FragmentMyself extends Fragment implements View.OnClickListener {
     @Nullable
     private Userinfo mUser;
-    private LinearLayout mButtonMessage;
-    private LinearLayout mButtonCollection;
+    private Button mButtonMessage;
+    private Button mButtonCollection;
     private ImageView mButtonUpdateInfo;
     private ImageView mButtonLogout;
     private ImageView mUserAvatorView;
@@ -38,8 +39,8 @@ public class FragmentMyself extends Fragment implements View.OnClickListener {
         //获取到当前用户信息
         mUser = CurrentUser.getcurrentUser();
 
-        mButtonMessage = (LinearLayout) view.findViewById(R.id.b_user_message);
-        mButtonCollection = (LinearLayout) view.findViewById(R.id.b_user_collection);
+        mButtonMessage = (Button) view.findViewById(R.id.b_user_message);
+        mButtonCollection = (Button) view.findViewById(R.id.b_user_collection);
         //get 到当前的各种view
         mButtonUpdateInfo = (ImageView) view.findViewById(R.id.iv_user_avatar);
         mButtonLogout = (ImageView) view.findViewById(R.id.iv_logout);
@@ -52,8 +53,12 @@ public class FragmentMyself extends Fragment implements View.OnClickListener {
         mButtonLogout.setOnClickListener(this);
 
         // 加载头像
-        new LoadImagesTask(mUserAvatorView).execute(mUser.getUserAddr());
-        mUsernameView.setText(mUser.getUserName());
+        if(mUser!=null)
+        {   Log.e("TagUsername", mUser.getUserName());
+            new LoadImagesTask(mUserAvatorView).execute(mUser.getUserAddr());
+            mUsernameView.setText(mUser.getUserName());
+        }
+        Log.e("userIsNull?", mUser==null?true+"":false+"");
         // TODO 加载其他信息
         // ...
 
