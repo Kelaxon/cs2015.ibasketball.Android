@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     // 刷新newsFragment
                     ft.detach(news);
                     ft.attach(news);
-//                    ft.commit();
+                    ft.commit();
                     ft.show(news);
                 }
 

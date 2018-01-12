@@ -55,7 +55,7 @@ public class FragmentMyself extends Fragment implements View.OnClickListener {
         // 加载头像
         if(mUser!=null)
         {   Log.e("TagUsername", mUser.getUserName());
-            new LoadImagesTask(mUserAvatorView).execute(mUser.getUserAddr());
+            new LoadImagesTask(mUserAvatorView).execute(mUser.getUserAvatar());
             mUsernameView.setText(mUser.getUserName());
         }
         Log.e("userIsNull?", mUser==null?true+"":false+"");
