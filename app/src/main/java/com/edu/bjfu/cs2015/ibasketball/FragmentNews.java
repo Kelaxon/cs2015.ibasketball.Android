@@ -17,8 +17,10 @@ import android.widget.Toast;
 import com.edu.bjfu.cs2015.ibasketball.adapter.ListNewsinfoAdapter;
 import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
 import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -26,10 +28,8 @@ import java.util.List;
 
 import Action.Action;
 import Action.ListAllAction;
-import JSONPO.Newsinfo;
-
 import Action.ServerCallback;
-import JSONPO.Userinfo;
+import JSONPO.Newsinfo;
 
 /**
  * Created by ChrisYoung on 2017/12/27.
@@ -73,7 +73,7 @@ public class FragmentNews extends Fragment {
                     @Override
                     public void onItemClick(View view, Newsinfo newsinfo) {
                         int newsId = newsinfo.getNewsId();
-                        Intent i = new Intent(getActivity(), MainActivity.class);
+                        Intent i = new Intent(getActivity(), DetailNewsActivity.class);
                         i.putExtra("newsId", newsId);
                         startActivity(i);
                     }
@@ -88,6 +88,8 @@ public class FragmentNews extends Fragment {
 
     List<Newsinfo> newsInfoList = new ArrayList<>();
 
+    //why  ?
+    //how to debug?!
     public List<Newsinfo> listAll() {
 
         infoMessage = "";
@@ -99,8 +101,9 @@ public class FragmentNews extends Fragment {
         //请你指定http请求参数
         //申请http
         HttpConnection.execute(listAllAction, null, new ServerCallback() {
+
             @Override
-            public void onSuccess(JsonObject reponse) {
+            public void onSuccess(JSONObject reponse) {
 
                 //处理response
                 if (reponse != null) {
@@ -110,7 +113,11 @@ public class FragmentNews extends Fragment {
                     //get类型
                     Type typeForParam = new TypeToken<List<Newsinfo>>() {}.getType();
                     //传入去掉头部的json String 进行解析
-                    newsInfoList = jsonToInstance.ToInstance(reponse.get("userinfo").toString(), typeForParam);
+                    try {
+                        newsInfoList = jsonToInstance.ToInstance(reponse.getString("userinfo").toString(), typeForParam);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 if (newsInfoList != null) {

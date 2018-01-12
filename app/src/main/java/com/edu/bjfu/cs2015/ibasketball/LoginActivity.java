@@ -14,12 +14,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.edu.bjfu.cs2015.ibasketball.UI.FullScreenVideoView;
 import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
 import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -71,11 +72,11 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+//                //创建线程 实现信息处理
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         attemptLogin();
-
                     }
                 }).start();
 
@@ -108,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     private void attemptLogin() {
 
         final String username = mUsernameView.getText().toString();
@@ -116,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean cancel = false;
         View focusView = null;
-
 
         if (cancel) {
             focusView.requestFocus();
@@ -144,8 +143,9 @@ public class LoginActivity extends AppCompatActivity {
 
             HttpConnection.execute(userLoginAction, mapInfo, new ServerCallback() {
 
+
                 @Override
-                public void onSuccess(JsonObject reponse) {
+                public void onSuccess(JSONObject reponse) {
 
                     Userinfo userinfo = null;
 
@@ -153,14 +153,15 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("LogJson2", reponse + "");
 
                         JsonToInstance<Userinfo> jsonToInstance = new JsonToInstance();
-
                         //get类型
                         Type typeForParam = new TypeToken<Userinfo>() {}.getType();
-
                         //传入去掉头部的json String 进行解析
-                        userinfo = jsonToInstance.ToInstance(reponse.get("userinfo").toString(), typeForParam);
+                        try {
+                            userinfo = jsonToInstance.ToInstance(reponse.getString("userinfo"), typeForParam);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-
                     // 有错情况
                     if (userinfo == null) {
                         Toast.makeText(LoginActivity.this, infoMessage, Toast.LENGTH_SHORT).show();
@@ -175,25 +176,9 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             });
-//                        HttpConnection.execute(userLoginAction, mapInfo);
-//                        if (HttpConnection.getResponse() == null)
-//                            try {
-//                                Thread.sleep(1000);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                        else
-//                            break;
         }
-        //获取响应 json文件
-
     }
-//            String reponse = HttpConnection.getResponse();
-//            HttpConnection.setResponse(null);
-//            Log.e("tag1", reponse);
-//            //请问你要get什么？
-//            //infoMessage = HttpConnection.get ??;
-//
+
 //            // TODO 获得用户对象 modify by molinli
 
 

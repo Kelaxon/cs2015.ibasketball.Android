@@ -9,9 +9,9 @@ import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -88,16 +88,20 @@ public class HttpConnection {
 //        })
 
 
-        StringRequest request = new StringRequest(Request.Method.POST, action.getUrl(), new Response.Listener<String>() {
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, action.getUrl(), new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                callback.onSuccess(response);
+//            },
+//        })
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, action.getUrl(), new Response.Listener<JSONObject>() {
+
 
             @Override
-            public void onResponse(String response) {
-
+            public void onResponse(JSONObject response) {
+                callback.onSuccess(response);
             }
-
-            public void onResponse(JsonObject result){
-                callback.onSuccess(result);
-        }
     },new Response.ErrorListener()
 
     {
