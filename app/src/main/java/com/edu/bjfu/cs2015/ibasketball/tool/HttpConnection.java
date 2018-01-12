@@ -8,16 +8,15 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.Map;
 
-import Action.Action;
 import Action.ServerCallback;
-
+import Action.Action;
 /**
  * Created by 莫林立 on 2018/1/6.
  */
@@ -26,9 +25,8 @@ public class HttpConnection {
 
     private static Map map = null;        //3.请求参数
     private static String url = null;     //1.url地址
-    private static String response;        //响应
+    private static String response=null;        //响应
     private static Context context = null;        //2.组件内容
-
 
     public static Map getMap() {
         return map;
@@ -38,8 +36,13 @@ public class HttpConnection {
         return url;
     }
 
-    public static String getResponse() {
-        return response;
+    public static JsonObject getResponse() {
+
+        if(response!=null){
+         return    new JsonParser().parse(response).getAsJsonObject();
+        }else {
+            return null;
+        }
     }
 
     public static Context getContext() {
@@ -80,71 +83,55 @@ public class HttpConnection {
          * 第一个参数指定了请求方式，第二个参数指定了url，第三个参数指定了正确访问的返回结果，第四个参数是访问失败后的业务逻辑；
          *
          */
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, action.getUrl(), new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//
-//            }
-//        })
-
-
         StringRequest request = new StringRequest(Request.Method.POST, action.getUrl(), new Response.Listener<String>() {
 
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String result) {
+
+                Log.e("tagJson", result+"");
+
+                JsonObject returnData = new JsonParser().parse(result).getAsJsonObject();
+
+                callback.onSuccess(returnData);
 
             }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                if (volleyError == null)
+                    Log.e("tag3", "空");
+                else {
+                    volleyError.printStackTrace();
+                    Log.e("tag3", volleyError.getMessage());
+                }
+                setResponse("未能请求到数据");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {//在这里封装了需要发送的参数；
+                Map<String, String> mapinfo = getMap();
+                return mapinfo;
+            }
+        };
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
 
-            public void onResponse(JsonObject result){
-                callback.onSuccess(result);
-        }
-    },new Response.ErrorListener()
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
 
-    {
-        @Override
-        public void onErrorResponse (VolleyError volleyError){
-        if (volleyError == null)
-            Log.e("tag3", "空");
-        else {
-            volleyError.printStackTrace();
-            Log.e("tag3", volleyError.getMessage());
-        }
-        setResponse("未能请求到数据");
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+        Volley.newRequestQueue(context).add(request);
+
+
     }
-    })
-
-    {
-        @Override
-        protected Map<String, String> getParams () throws AuthFailureError {//在这里封装了需要发送的参数；
-        Map<String, String> mapinfo = getMap();
-        return mapinfo;
-    }
-    }
-
-    ;
-        request.setRetryPolicy(new
-
-    RetryPolicy() {
-        @Override
-        public int getCurrentTimeout () {
-            return 50000;
-        }
-
-        @Override
-        public int getCurrentRetryCount () {
-            return 50000;
-        }
-
-        @Override
-        public void retry (VolleyError error) throws VolleyError {
-
-        }
-    });
-        Volley.newRequestQueue(context).
-
-    add(request);
-
-
-}
 
 }

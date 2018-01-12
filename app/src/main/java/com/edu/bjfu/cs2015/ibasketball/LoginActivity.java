@@ -21,6 +21,9 @@ import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +35,6 @@ import JSONPO.CurrentUser;
 import JSONPO.Userinfo;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-;
 
 /**
  * Created by ChrisYoung on 2017/12/27.
@@ -108,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     private void attemptLogin() {
 
         final String username = mUsernameView.getText().toString();
@@ -158,7 +159,11 @@ public class LoginActivity extends AppCompatActivity {
                         Type typeForParam = new TypeToken<Userinfo>() {}.getType();
 
                         //传入去掉头部的json String 进行解析
-                        userinfo = jsonToInstance.ToInstance(reponse.get("userinfo").toString(), typeForParam);
+                        try {
+                            userinfo = jsonToInstance.ToInstance(reponse.get("userinfo").toString(), typeForParam);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     // 有错情况
