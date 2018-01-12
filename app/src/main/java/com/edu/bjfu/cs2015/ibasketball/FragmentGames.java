@@ -16,6 +16,7 @@ import com.edu.bjfu.cs2015.ibasketball.UI.SearchView;
 import com.edu.bjfu.cs2015.ibasketball.adapter.ListGamesAdapter;
 import com.edu.bjfu.cs2015.ibasketball.tool.HttpConnection;
 import com.edu.bjfu.cs2015.ibasketball.tool.JsonToInstance;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -24,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 
 import Action.Action;
-import JSONPO.Gameinfo;
 import Action.ListAllAction;
+import JSONPO.Gameinfo;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
@@ -74,15 +75,15 @@ public class FragmentGames extends Fragment implements SearchView.SearchViewList
         //申请http
         //HttpConnection.execute(listAllAction,mapInfo);
         //获取响应 json文件
-        String reponse = HttpConnection.getResponse();
-        //创建json解析实例
-        JsonToInstance<List<Gameinfo>> jsonToInstance = new JsonToInstance();
-        //get类型
-        Type typeForParam=new TypeToken<List<Gameinfo>>(){}.getType();
-        //get到list
-        mGameInfoList = jsonToInstance.ToInstance(reponse,typeForParam);
-
-        mGameInfoAdapter = new ListGamesAdapter(mGameInfoList, getActivity());
+//        JsonObject reponse = HttpConnection.getResponse();
+//        //创建json解析实例
+//        JsonToInstance<List<Gameinfo>> jsonToInstance = new JsonToInstance();
+//        //get类型
+//        Type typeForParam=new TypeToken<List<Gameinfo>>(){}.getType();
+//        //get到list
+//        mGameInfoList = jsonToInstance.ToInstance(reponse.get("gameinfoList").toString(),typeForParam);
+//
+//        mGameInfoAdapter = new ListGamesAdapter(mGameInfoList, getActivity());
 
 
         //设置Adapter
@@ -112,7 +113,7 @@ public class FragmentGames extends Fragment implements SearchView.SearchViewList
                 //申请http
                 //HttpConnection.execute(listAllAction,mapInfo);
                 //获取响应 json文件
-                String reponse = HttpConnection.getResponse();
+                JsonObject reponse = HttpConnection.getResponse();
                 //创建json解析实例
                 JsonToInstance<List<Gameinfo>> jsonToInstance = new JsonToInstance();
                 //get类型
@@ -125,7 +126,7 @@ public class FragmentGames extends Fragment implements SearchView.SearchViewList
 
 //                infoMessage ="";
 
-                gameInfoList = jsonToInstance.ToInstance(reponse,typeForParam);
+//                gameInfoList = jsonToInstance.ToInstance(reponse.get(""),typeForParam);
             }
         });
         t1.start();
