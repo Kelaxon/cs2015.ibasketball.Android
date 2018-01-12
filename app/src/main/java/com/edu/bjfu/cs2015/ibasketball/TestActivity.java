@@ -123,7 +123,7 @@ public class TestActivity extends AppCompatActivity {
                 //4.执行连接
                 HttpConnection.volleyPost();
                 //5.打印结果--响应有延迟，延迟使用getResponse() 获取到的是json string
-                textView.setText(HttpConnection.getResponse());
+//                textView.setText(HttpConnection.getResponse());
             }
         });
     }
