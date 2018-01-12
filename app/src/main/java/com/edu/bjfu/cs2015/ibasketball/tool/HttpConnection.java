@@ -6,7 +6,6 @@ import android.util.Log;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -102,53 +101,31 @@ public class HttpConnection {
             public void onResponse(JSONObject response) {
                 callback.onSuccess(response);
             }
-    },new Response.ErrorListener()
+        }, new Response.ErrorListener()
 
-    {
-        @Override
-        public void onErrorResponse (VolleyError volleyError){
-        if (volleyError == null)
-            Log.e("tag3", "空");
-        else {
-            volleyError.printStackTrace();
-            Log.e("tag3", volleyError.getMessage());
-        }
-        setResponse("未能请求到数据");
+        {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                if (volleyError == null)
+                    Log.e("tag3", "空");
+                else {
+                    volleyError.printStackTrace();
+                    Log.e("tag3", volleyError.getMessage());
+                }
+                setResponse("未能请求到数据");
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {//在这里封装了需要发送的参数；
+                Map<String, String> mapinfo = getMap();
+                return mapinfo;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
+
+
     }
-    })
-
-    {
-        @Override
-        protected Map<String, String> getParams () throws AuthFailureError {//在这里封装了需要发送的参数；
-        Map<String, String> mapinfo = getMap();
-        return mapinfo;
-    }
-    }
-
-    ;
-        request.setRetryPolicy(new
-
-    RetryPolicy() {
-        @Override
-        public int getCurrentTimeout () {
-            return 50000;
-        }
-
-        @Override
-        public int getCurrentRetryCount () {
-            return 50000;
-        }
-
-        @Override
-        public void retry (VolleyError error) throws VolleyError {
-
-        }
-    });
-        Volley.newRequestQueue(context).
-
-    add(request);
-
-
-}
 
 }
