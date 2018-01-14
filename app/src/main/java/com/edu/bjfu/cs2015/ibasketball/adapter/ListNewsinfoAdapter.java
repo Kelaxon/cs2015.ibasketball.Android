@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.edu.bjfu.cs2015.ibasketball.R;
 import com.edu.bjfu.cs2015.ibasketball.tool.LoadImagesTask;
 
-
 import java.util.List;
 
 import JSONPO.Newsinfo;
@@ -38,7 +37,7 @@ public class ListNewsinfoAdapter extends RecyclerView.Adapter<ListNewsinfoAdapte
 
         public ViewHolder(View itemView){
             super(itemView);
-            mNewsPic = (ImageView) itemView.findViewById(R.id.iv_news_detail);
+            mNewsPic = (ImageView) itemView.findViewById(R.id.iv_news_pic);
             mNewsTitle = (TextView) itemView.findViewById(R.id.tv_news_title);
             mNewsShortContent = (TextView) itemView.findViewById(R.id.tv_news_shortContent);
         }
@@ -60,7 +59,7 @@ public class ListNewsinfoAdapter extends RecyclerView.Adapter<ListNewsinfoAdapte
     @Override
     public void onClick(View v) {
         if(mOnRecyclerViewItemClickListener != null){
-            mOnRecyclerViewItemClickListener.onItemClick(v, (Newsinfo)v.getTag());
+            mOnRecyclerViewItemClickListener.onItemClick(v, (Newsinfo) v.getTag());
         }
         Log.e("Adapter",v.getId()+"");  // 被点击的控件的id
     }
@@ -80,16 +79,11 @@ public class ListNewsinfoAdapter extends RecyclerView.Adapter<ListNewsinfoAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // TODO  holder的各种view要通过JDBC操作来set modify by molinli
-        holder.mNewsShortContent.setText(mNewsinfoList.get(position).getNewsContent());
+        holder.mNewsShortContent.setText(mNewsinfoList.get(position).getNewsContent().substring(0,100));
         holder.mNewsTitle.setText(mNewsinfoList.get(position).getNewsTitle());
         //图片
         new LoadImagesTask(holder.mNewsPic).execute(mNewsinfoList.get(position).getNewsPic());
-
-//        holder.mNewsShortContent.setText((CharSequence) mNewsinfoList.get(position).get("pname"));
-//        Picasso.with( mContext).load(mNewsinfoList.get(position).getAVFile("TitleImage") == null ? "NO PICTURE" : mNewsinfoList.get(position).getAVFile("TitleImage").getUrl()).transform(new RoundedTransformation(9,0)).into(holder.mNewsPic);
-//        holder.itemView.setTag(mNewsinfoList.get(position));
-
-        //?
+        holder.itemView.setTag(mNewsinfoList.get(position));  // 必不可少!
 
 
     }

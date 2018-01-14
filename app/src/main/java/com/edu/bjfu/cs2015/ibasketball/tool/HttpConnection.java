@@ -129,6 +129,7 @@ public class HttpConnection {
 
             }
         });
+        Log.e("tagContext",context==null?true+"":false+"");
         Volley.newRequestQueue(context).add(request);
 
 

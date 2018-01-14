@@ -37,7 +37,7 @@
                 android:layout_alignBottom="@id/iv_news_pic"
                 android:padding="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:text="@string/test_news_title"
                 android:textSize="20sp" />
         </RelativeLayout>

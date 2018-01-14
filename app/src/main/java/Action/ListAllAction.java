@@ -17,6 +17,11 @@ public class ListAllAction implements Action {
             URL += "listNewsAllApp.action";
         }
 
+        if(type.equals("game")){
+
+            URL+="listGameAllApp.action";
+        }
+
         if (type.equals("message"))
             URL += "listMessageAllApp.action";
     }

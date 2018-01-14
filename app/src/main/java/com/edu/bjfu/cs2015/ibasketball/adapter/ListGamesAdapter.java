@@ -91,11 +91,11 @@ public class ListGamesAdapter extends RecyclerView.Adapter<ListGamesAdapter.View
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         // TODO  holder的各种view set modify by molinli
-        holder.mGameTime.setText((CharSequence) mGameinfoList.get(position).getGameTime());
+        holder.mGameTime.setText((CharSequence) mGameinfoList.get(position).getGameTime().toString());
         holder.mTeam1Name.setText((CharSequence) mGameinfoList.get(position).getTeaminfoByGameTeam1Id().getTeamName());
         holder.mTeam2Name.setText((CharSequence) mGameinfoList.get(position).getTeaminfoByGameTeam2Id().getTeamName());
-        holder.mTeam1result.setText(mGameinfoList.get(position).getGameTeam1result());
-        holder.mTeam2result.setText(mGameinfoList.get(position).getGameTeam2result());
+        holder.mTeam1result.setText(mGameinfoList.get(position).getGameTeam1result()+"");
+        holder.mTeam2result.setText(mGameinfoList.get(position).getGameTeam2result()+"");
         //加载图片
         new LoadImagesTask(holder.mTeam1Logo).execute(mGameinfoList.get(position).getTeaminfoByGameTeam1Id().getTeamLogo());
         new LoadImagesTask(holder.mTeam2Logo).execute(mGameinfoList.get(position).getTeaminfoByGameTeam2Id().getTeamLogo());

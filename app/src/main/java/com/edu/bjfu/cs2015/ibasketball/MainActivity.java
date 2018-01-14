@@ -110,22 +110,24 @@ public class MainActivity extends AppCompatActivity {
         switch (index) {
             case FRAGMENT_GAMES:
                 if (games == null) {
-                    games = new FragmentNews();
+                    games = new FragmentGames();
                     ft.add(R.id.fragment_layout_main, games);
                 } else {
                     ft.show(games);
                 }
+                break;
             case FRAGMENT_NEWS:
                 if (news == null) {
                     news = new FragmentNews();
                     ft.add(R.id.fragment_layout_main, news);
                 } else {
                     // 刷新newsFragment
-                    ft.detach(news);
-                    ft.attach(news);
-                    ft.commit();
+//                    ft.detach(news);
+//                    ft.attach(news);
+//                    ft.commit();
                     ft.show(news);
                 }
+                break;
 
             case FRAGMENT_MYSELF:
                 if (myself == null) {

@@ -98,30 +98,23 @@ public class FragmentNews extends Fragment {
                 }
 
                 if (newsInfoList != null) {
-                    Log.e("LogJson2", reponse + "" + "newsInfoList is null!");
-
-                } else {
-                    // 无错情况
-                    Log.e("newsInfoList", newsInfoList.toString() + "");
+                    mNewsInfoAdapter = new ListNewsinfoAdapter(newsInfoList, getActivity());
+                    //设置Adapter
+                    mRecyclerView.setAdapter(mNewsInfoAdapter);
+                    mNewsInfoAdapter.setOnRecyclerViewItemClickListener(new ListNewsinfoAdapter.OnRecyclerViewItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, Newsinfo newsinfo) {
+//                            int newsId = newsinfo.getNewsId();
+                            Intent i = new Intent(getActivity(), DetailNewsActivity.class);
+                            i.putExtra("newsinfo", newsinfo);
+                            startActivity(i);
+                        }
+                    });
                 }
             }
 
         });
-        if (mNewsInfoList != null) {
-            mNewsInfoAdapter = new ListNewsinfoAdapter(mNewsInfoList, getActivity());
 
-            //设置Adapter
-            mRecyclerView.setAdapter(mNewsInfoAdapter);
-            mNewsInfoAdapter.setOnRecyclerViewItemClickListener(new ListNewsinfoAdapter.OnRecyclerViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, Newsinfo newsinfo) {
-                    int newsId = newsinfo.getNewsId();
-                    Intent i = new Intent(getActivity(), MainActivity.class);
-                    i.putExtra("newsId", newsId);
-                    startActivity(i);
-                }
-            });
-        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.edu.bjfu.cs2015.ibasketball;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,10 +8,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.edu.bjfu.cs2015.ibasketball.UI.SearchView;
 import com.edu.bjfu.cs2015.ibasketball.adapter.ListGamesAdapter;
@@ -20,13 +21,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import Action.Action;
 import Action.ListAllAction;
+import Action.ServerCallback;
 import JSONPO.Gameinfo;
+import JSONPO.Newsinfo;
 
 /**
  * Created by ChrisYoung on 2017/12/26.
@@ -38,21 +41,13 @@ public class FragmentGames extends Fragment implements SearchView.SearchViewList
     private ListGamesAdapter mGameInfoAdapter;      //赛事列表Adapter
     private List<Gameinfo> mGameInfoList;  //所有赛事数据
     private String infoMessage;
-
-
-    //设置提示框显示数据项的个数
-//    public static void setHintCount(int hintCount){
-//        FragmentSousuo.mHintCount = hintCount;
-//    }
-
+    // 传入参数
+    List<Gameinfo> gameInfoList = null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_games, container, false);
-
-        //初始化数据
-        mGameInfoList = null;
 
 
         //RecyclerView的初始化
@@ -65,79 +60,71 @@ public class FragmentGames extends Fragment implements SearchView.SearchViewList
         //设置item的动画，可以不设置
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // TODO Post Response操作获取所有赛事   modify by molinli
-        Action listAllAction = new ListAllAction("game");
-        //获取到当前contenxt
-        listAllAction.setContext(getContext());
-        //请你指定http请求参数
-        Map mapInfo=new HashMap();
-        mapInfo.put("key","value");
-        //申请http
-        //HttpConnection.execute(listAllAction,mapInfo);
-        //获取响应 json文件
-//        JsonObject reponse = HttpConnection.getResponse();
-//        //创建json解析实例
-//        JsonToInstance<List<Gameinfo>> jsonToInstance = new JsonToInstance();
-//        //get类型
-//        Type typeForParam=new TypeToken<List<Gameinfo>>(){}.getType();
-//        //get到list
-//        mGameInfoList = jsonToInstance.ToInstance(reponse.get("gameinfoList").toString(),typeForParam);
-//
-//        mGameInfoAdapter = new ListGamesAdapter(mGameInfoList, getActivity());
 
-
-        //设置Adapter
-        mRecyclerView.setAdapter(mGameInfoAdapter);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 获取数据
+                try {
+                    listAll();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
         return view;
     }
 
-    // 传入参数
-    List<Gameinfo> gameInfoList = null;
 
-    public List<Gameinfo> listAll() throws InterruptedException {
-
+    public void listAll() throws InterruptedException {
 
         infoMessage = "";
 
-        Thread t1 = new Thread(new Runnable() {
+        Action listAllAction = new ListAllAction("game");
+        //获取到当前contenxt
+        listAllAction.setContext(getContext());
+
+        HttpConnection.execute(listAllAction, new HashMap(), new ServerCallback() {
+
             @Override
-            public void run() {
-                // TODO Post Response操作获取所有新闻 modify by molinli
-                Action listAllAction = new ListAllAction("game");
-                //获取到当前contenxt
-                listAllAction.setContext(getContext());
-                //请你指定http请求参数
-                Map mapInfo=new HashMap();
-                mapInfo.put("key","value");
-                //申请http
-                //HttpConnection.execute(listAllAction,mapInfo);
-                //获取响应 json文件
-                JsonObject reponse = HttpConnection.getResponse();
-                //创建json解析实例
-                JsonToInstance<List<Gameinfo>> jsonToInstance = new JsonToInstance();
-                //get类型
-                Type typeForParam=new TypeToken<List<Gameinfo>>(){}.getType();
+            public void onSuccess(JsonObject reponse) {
+                List<Gameinfo> newsInfoList = new ArrayList<>();
 
+                if (reponse != null) {
+                    Log.e("LogJson2", reponse + "");
 
-//                HttpConnection.execute(listAllAction);
+                    JsonToInstance<List<Gameinfo>> jsonToInstance = new JsonToInstance();
 
-//                String reponse = HttpConnection.getResponse();
+                    Type typeForParam = new TypeToken<List<Gameinfo>>() {
+                    }.getType();
 
-//                infoMessage ="";
+                    //传入去掉头部的json String 进行解析
+                    gameInfoList = jsonToInstance.ToInstance(reponse.get("gameinfoList").toString(), typeForParam);
 
-//                gameInfoList = jsonToInstance.ToInstance(reponse.get(""),typeForParam);
+                }
+
+                if (gameInfoList != null) {
+                    mGameInfoAdapter = new ListGamesAdapter(gameInfoList, getActivity());
+                    mRecyclerView.setAdapter(mGameInfoAdapter);
+                    mGameInfoAdapter.setOnRecyclerViewItemClickListener(new ListGamesAdapter.OnRecyclerViewItemClickListener() {
+                        @Override
+                        // 有错！！!
+                        public void onItemClick(View view, Newsinfo newsinfo) {
+                            int newsId = newsinfo.getNewsId();
+                            Intent i = new Intent(getActivity(), MainActivity.class);
+                            i.putExtra("newsId", newsId);
+                            startActivity(i);
+                        }
+                    });
+
+//            return gameInfoList;
+                }
+
             }
         });
-        t1.start();
-        t1.join();
 
-        if(gameInfoList==null){
-            Toast.makeText(getActivity(), infoMessage, Toast.LENGTH_SHORT).show();
-            return null;
-        }else{
-            return gameInfoList;
-        }
+
     }
 
 
