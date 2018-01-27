@@ -5,14 +5,11 @@
 
 预览页面:
 
-![20180127121927](README_Images/20180127121927.jpg)![20180127121942](README_Images/20180127121942.jpg)
-
-![20180127121935](README_Images/20180127121935.jpg)
-
-![20180127121911](README_Images/20180127121911.jpg)
-
-![20180127121857](README_Images/20180127121919.jpg)
-
+<a href="url"><img src="README_Images/20180127121927.jpg" align="left" height="40%" width="40%" ></a><br>
+<a href="url"><img src="README_Images/20180127121942.jpg" align="left" height="40%" width="40%" ></a><br>
+<a href="url"><img src="README_Images/20180127121935.jpg" align="left" height="40%" width="40%" ></a><br>
+<a href="url"><img src="README_Images/20180127121911.jpg" align="left" height="40%" width="40%" ></a><br>
+<a href="url"><img src="README_Images/20180127121919.jpg" align="left" height="40%" width="40%" ></a><br>
 
 
 ## 使用
